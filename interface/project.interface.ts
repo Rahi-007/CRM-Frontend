@@ -12,10 +12,10 @@ export interface IProject {
     workType: WorkType;
     subType?: SubType;
     quantity: number;
-    submitDate: Date;
+    submitDate: string;
     submitCode: string;
     status: ProjectStatus;
-    assign: {
+    assignedTo: {
         id: string;
         name: string;
     }
@@ -35,15 +35,15 @@ export interface IProject {
 export interface IAddProject {
     name: string;
     businessUnit: BusinessUnit;
-    client: string;
+    clientId: string;
     briefCode?: string;
     workType: WorkType;
     subType?: SubType;
     quantity: number;
-    submitDate: Date;
+    submitDate: string;
     submitCode: string;
     status: ProjectStatus;
-    assign: string;
+    assignedToId: string;
     link?: string;
 }
 

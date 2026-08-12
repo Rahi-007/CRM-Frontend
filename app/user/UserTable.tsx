@@ -25,18 +25,14 @@ export default function UserTable({ data }: IProps) {
             width: 108,
         },
         {
-            headerName: "First Name",
-            field: "firstName",
+            headerName: "Name",
+            valueGetter: (params) =>
+                [params.data?.firstName, params.data?.lastName]
+                    .filter(Boolean)
+                    .join(" "),
             sortable: true,
             filter: true,
-            flex: 1,
-        },
-        {
-            headerName: "Last Name",
-            field: "lastName",
-            sortable: true,
-            filter: true,
-            flex: 1,
+            flex: 1.5,
         },
         {
             headerName: "Phone",

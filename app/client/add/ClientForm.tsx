@@ -35,7 +35,7 @@ const ClientForm = (props: IProps) => {
       firstName: props.defaultValues?.firstName,
       lastName: props.defaultValues?.lastName || "",
       phone: props.defaultValues?.phone,
-      address: props.defaultValues?.lastName || "",
+      address: props.defaultValues?.address || "",
     },
   });
 

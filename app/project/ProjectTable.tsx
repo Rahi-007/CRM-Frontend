@@ -42,8 +42,8 @@ export default function ProjectTable({ data }: IProps) {
         },
         {
             headerName: "Assign To",
-            field: "assign.name",
-            valueGetter: (params) => params.data?.assign?.name,
+            field: "assignedTo.name",
+            valueGetter: (params) => params.data?.assignedTo?.name,
             sortable: true,
             filter: true,
             flex: 1,
@@ -64,7 +64,7 @@ export default function ProjectTable({ data }: IProps) {
             headerName: "Status",
             field: "status",
             filter: true,
-            width: 100,
+            width: 120,
             cellRenderer: (params: { value: ProjectStatus }) => {
                 const statusMap = {
                     [ProjectStatus.BM_Approved]: {

@@ -20,15 +20,15 @@ import toast from "react-hot-toast";
 const ProjectSchema = z.object({
   name: z.string({ message: "Project name is Required" }),
   businessUnit: z.number({ message: "Business Unit is Required" }),
-  client: z.string({ message: "Client is Required" }),
+  clientId: z.string({ message: "Client is Required" }),
   briefCode: z.string().optional(),
   workType: z.number({ message: "Work type Unit is Required" }),
   subType: z.number().optional(),
   quantity: z.number({ message: "Enter the quantity" }),
-  submitDate: z.date({ message: "Enter the submit date" }),
+  submitDate: z.string().min(1, "Enter the submit date"),
   submitCode: z.string({ message: "Enter the submit code" }),
   status: z.number({ message: "Status is Required", }),
-  assign: z.string({ message: "Assign a user" }),
+  assignedToId: z.string({ message: "Assign a user" }),
   link: z.string().optional(),
 });
 
@@ -48,7 +48,7 @@ const ProjectForm = (props: Props) => {
     defaultValues: {
       name: props.defaultValues?.name,
       businessUnit: props.defaultValues?.businessUnit,
-      client: props.defaultValues?.client?.name,
+      clientId: props.defaultValues?.client?.id,
       briefCode: props.defaultValues?.briefCode,
       workType: props.defaultValues?.workType,
       subType: props.defaultValues?.subType,
@@ -56,7 +56,7 @@ const ProjectForm = (props: Props) => {
       submitDate: props.defaultValues?.submitDate,
       submitCode: props.defaultValues?.submitCode,
       status: props.defaultValues?.status,
-      assign: props.defaultValues?.assign?.name,
+      assignedToId: props.defaultValues?.assignedTo?.id,
       link: props.defaultValues?.link || "",
     },
   });
@@ -89,8 +89,8 @@ const ProjectForm = (props: Props) => {
         <GInput.Form name="name" label="Project Name" control={form.control} placeholder="Project Name" required />
         <GSelect.Form control={form.control} name="businessUnit" label="Business Unit" placeholder="Select Business Unit" options={enumToOptions(BusinessUnit)} required />
 
-        <Client.Form control={form.control} name="client" label="Client" required />
-        <User.Form control={form.control} name="assign" label="Assign User" required />
+        <Client.Form control={form.control} name="clientId" label="Client" required />
+        <User.Form control={form.control} name="assignedToId" label="Assign User" required />
         <GSelect.Form control={form.control} name="status" label="Status" options={enumToOptions(ProjectStatus)} required />
 
         <GAmount.Form name="quantity" label="Quantity" type="number" control={form.control} placeholder="Quantity" required />

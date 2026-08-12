@@ -10,7 +10,7 @@ import type { IUser } from "@/interface/user.interface";
 import { enumToOptions } from "@/lib/utils";
 import { Gender } from "@/config/enum";
 import GInput from "@/components/generic/GInput";
-import GDatePicker from "@/components/generic/GDatePicker";
+// import GDatePicker from "@/components/generic/GDatePicker";
 import GSelect from "@/components/generic/GSelect";
 import Team from "@/components/futures/Team";
 import toast from "react-hot-toast";
@@ -105,9 +105,18 @@ const UserForm = (props: IProps) => {
         {!props.defaultValues && <GInput.Form type={showPass ? "text" : "password"} name="password" label="Password" control={form.control} placeholder="••••••••" required />}
         <Team.Form control={form.control} name="teamId" label="Team Name" />
 
-        <GInput.Form name="address" label="Address" control={form.control} placeholder="Present Address" />
         <GSelect.Form control={form.control} name="gender" label="Gender" placeholder="Select Gender" options={enumToOptions(Gender)} />
-        <GDatePicker.Form control={form.control} name="dateOfBirth" label="Date of Birth" placeholder="Select date" />
+        {props.defaultValues ? (
+          <div className="md:col-span-2 xl:col-span-3">
+            <GInput.Form name="address" label="Address" control={form.control} placeholder="Present Address" />
+          </div>
+        ) : (
+          <div className="xl:col-span-2">
+            <GInput.Form name="address" label="Address" control={form.control} placeholder="Present Address" />
+          </div>
+        )}
+
+        {/* <GDatePicker.Form control={form.control} name="dateOfBirth" label="Date of Birth" placeholder="Select date" /> */}
       </div>
 
       <div className="flex justify-end rounded-b-2xl gap-3 border-t bg-slate-50 px-8 py-5">
@@ -153,7 +162,7 @@ const UserForm = (props: IProps) => {
           </>
         )}
       </div>
-    </form>
+    </form >
   );
 };
 

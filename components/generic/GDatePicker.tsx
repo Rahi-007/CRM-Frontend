@@ -41,7 +41,6 @@ function FormDatePicker<T extends FieldValues>({
 
         return (
           <div className="grid gap-1 mb-4 w-full">
-            {/* Label */}
             {label && (
               <Label htmlFor={name} className="text-sm font-medium text-gray-700">
                 {label}
@@ -49,11 +48,11 @@ function FormDatePicker<T extends FieldValues>({
               </Label>
             )}
 
-            {/* Base UI Popover */}
             <Popover>
               <PopoverTrigger
-                render={
+                render={(props) => (
                   <button
+                    {...props}
                     id={name}
                     type="button"
                     disabled={disabled}
@@ -64,34 +63,42 @@ function FormDatePicker<T extends FieldValues>({
                       !isValidDate && "text-gray-400",
                       fieldState.error ? "border-b-destructive" : "border-gray-300"
                     )}
-                  />
-                }
-              >
-                {isValidDate ? format(dateValue, "PPP") : placeholder}
-                <CalendarIcon className="h-4 w-4 text-[#449690] opacity-80 shrink-0" />
-              </PopoverTrigger>
+                  >
+                    <span>
+                      {isValidDate ? format(dateValue, "dd MMM yyyy") : placeholder}
+                    </span>
 
-              {/* Popover Content */}
-              <PopoverContent className="w-auto p-0 border border-gray-200 shadow-md rounded-none" align="start">
+                    <CalendarIcon className="h-5 w-5 text-[#449690]" />
+                  </button>
+                )} />
+
+              <PopoverContent
+                className="m-0 p-0 border-b border-x border-t-transparent  hover:border-[#449690] rounded-b-md w-full"
+                align="center"
+              >
                 <Calendar
                   mode="single"
+                  captionLayout="label"
+                  startMonth={new Date(1950, 0)}
+                  endMonth={new Date(new Date().getFullYear(), 11)}
+                  defaultMonth={isValidDate ? dateValue : new Date()}
                   selected={isValidDate ? dateValue : undefined}
                   onSelect={(date) => {
-                    field.onChange(date);
+                    field.onChange(date ? format(date, "yyyy-MM-dd") : undefined);
                   }}
+                  // selected={isValidDate ? dateValue : undefined}
+                  // onSelect={field.onChange}
                   disabled={disabled}
-                  // এখানে থাকা initialFocus প্রপটি মুছে দেওয়া হয়েছে
                 />
               </PopoverContent>
             </Popover>
 
-            {/* Error Message */}
             {fieldState.error && (
               <p className="text-xs text-red-500 mt-0.5">
                 {fieldState.error.message}
               </p>
             )}
-          </div>
+          </div >
         );
       }}
     />

@@ -7,14 +7,18 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { LogOut, Settings, User } from "lucide-react";
 import { clearAuth } from "@/context/slice/auth.slice";
+import { useAppSelector } from "@/hook/reduxHooks";
 import { logout } from "@/service/auth.service";
 import toast from "react-hot-toast";
 
 interface IProps {
     className?: string;
+    sidebarOpen: boolean;
+    setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header = ({ className }: IProps) => {
+const Header = ({ className, setSidebarOpen, sidebarOpen }: IProps) => {
+    const user = useAppSelector((state) => state.auth.user);
     const router = useRouter();
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
@@ -33,15 +37,24 @@ const Header = ({ className }: IProps) => {
 
     return (
         <div className={cn("h-[4.5vh] w-full bg-[#449690] flex justify-between items-center border-b border-gray-300", className)}>
-            <div className="">
-                <h1 className="px-4 text-xl font-semibold">UnityOps Software Limited</h1>  {/* Seema&apos;s Cloud Talk */}
-            </div>
+            <button
+                onClick={() => setSidebarOpen((prev) => !prev)}
+                className="px-4 text-xl font-semibold cursor-pointer"
+            >
+                <span className={`inline-block md:hidden transition-transform duration-500 ${sidebarOpen ? "italic -skew-x-6" : "not-italic skew-x-0"}`}>
+                    UnityOps Soft
+                </span>
+                <span className="hidden md:inline-block">
+                    UnityOps Software Limited
+                </span>
+            </button>
             <div ref={ref} className="relative">
                 <button
                     onClick={() => setOpen((prev) => !prev)}
                     className="cursor-pointer px-2 py-2 hover:bg-white/20"
                 >
-                    <span className="text-lg font-semibold">Super Admin</span>
+                    <span className="text-lg font-semibold sm:hidden">{user?.firstName}</span>
+                    <span className="text-lg font-semibold hidden sm:block">{user?.firstName} {user?.firstName ?? ""}</span>
                 </button>
                 <div
                     className={cn(

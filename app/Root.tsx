@@ -8,10 +8,12 @@ import Footer from "@/components/layouts/Footer";
 import Header from "@/components/layouts/Header";
 import SideBar from "@/components/layouts/SideBar";
 import Login from "@/components/layouts/LoginForm";
+import { cn } from "@/lib/utils";
 
 export default function Root({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector((state) => state.auth.accessToken);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
@@ -46,10 +48,20 @@ export default function Root({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Header />
-      <div className="flex">
-        <SideBar />
-        <main className="flex-1">
+      <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <div className="relative md:flex">
+        <aside
+          className={cn(
+            "absolute left-0 top-0 z-50 h-full transition-transform duration-300 ease-in-out md:static md:translate-x-0",
+            sidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full"
+          )}
+        >
+          <SideBar setSidebarOpen={setSidebarOpen} />
+        </aside>
+
+        <main className="min-w-0 md:flex-1">
           {children}
           <Footer />
         </main>

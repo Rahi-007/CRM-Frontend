@@ -22,18 +22,14 @@ export default function ClientTable({ data }: IProps) {
             headerName: "ID",
             field: "id",
             sortable: false,
-            width: 108,
-        },
-        {
-            headerName: "First Name",
-            field: "firstName",
-            sortable: true,
-            filter: true,
             flex: 1,
         },
         {
-            headerName: "Last Name",
-            field: "lastName",
+            headerName: "Name",
+            valueGetter: (params) =>
+                [params.data?.firstName, params.data?.lastName]
+                    .filter(Boolean)
+                    .join(" "),
             sortable: true,
             filter: true,
             flex: 1,
@@ -63,7 +59,7 @@ export default function ClientTable({ data }: IProps) {
                     month: "short",
                 })}, ${date.getFullYear()}`;
             },
-            width: 100,
+            flex: 1,
         },
         {
             headerName: "Action",

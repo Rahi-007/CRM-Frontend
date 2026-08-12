@@ -31,7 +31,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        "group/calendar rounded-xl border bg-background p-4 shadow-lg [--cell-radius:0] [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+        "group/calendar bg-background p-4 [--cell-radius:0] [--cell-size:--spacing(8)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
@@ -56,13 +56,12 @@ function Calendar({
         ),
         button_previous: cn(
           buttonVariants({ variant: buttonVariant }),
-          "size-8 rounded-md border border-gray-200 bg-white text-[#449690] hover:bg-[#449690] hover:text-white transition-all",
+          "size-(--cell-size) p-0 select-none aria-disabled:opacity-50 rounded-md border border-[#449690] bg-white text-[#449690] hover:bg-[#449690] hover:text-white transition-all",
           defaultClassNames.button_previous
         ),
         button_next: cn(
           buttonVariants({ variant: buttonVariant }),
-          "size-8 rounded-md border border-gray-200 bg-white text-[#449690] hover:bg-[#449690] hover:text-white transition-all",
-          // "size-(--cell-size) p-0 select-none aria-disabled:opacity-50",
+          "size-(--cell-size) p-0 select-none aria-disabled:opacity-50 rounded-md border border-[#449690] bg-white text-[#449690] hover:bg-[#449690] hover:text-white transition-all",
           defaultClassNames.button_next
         ),
         month_caption: cn(
@@ -74,7 +73,7 @@ function Calendar({
           defaultClassNames.dropdowns
         ),
         dropdown_root: cn(
-          "relative rounded-md border bg-white px-2 py-1 shadow-sm",
+          "relative rounded-sm border border-[#449690] bg-white px-2 py-1",
           defaultClassNames.dropdown_root
         ),
         dropdown: cn(
@@ -211,30 +210,12 @@ function CalendarDayButton({
       data-range-start={modifiers.range_start}
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
-      // className={cn(
-      //   "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground dark:hover:text-foreground [&>span]:text-xs [&>span]:opacity-70",
-      //   defaultClassNames.day,
-      //   className
-      // )}
       className={cn(
-        "h-10 w-10 rounded-full transition-all duration-200",
-
-        "hover:bg-[#449690]/10",
-
+        "relative isolate z-10 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 border-0 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:rounded-(--cell-radius) data-[range-end=true]:rounded-r-(--cell-radius) data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-muted data-[range-middle=true]:text-foreground data-[range-start=true]:rounded-(--cell-radius) data-[range-start=true]:rounded-l-(--cell-radius) data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground dark:hover:text-foreground [&>span]:text-xs [&>span]:opacity-70 hover:bg-[#449690]/10",
+        "rounded-full transition-all duration-200",
         "data-[selected-single=true]:bg-[#449690]",
         "data-[selected-single=true]:text-white",
-
-        "data-[range-start=true]:bg-[#449690]",
-        "data-[range-start=true]:text-white",
-
-        "data-[range-end=true]:bg-[#449690]",
-        "data-[range-end=true]:text-white",
-
-        "data-[range-middle=true]:bg-[#449690]/10",
-
-        "group-data-[focused=true]/day:ring-2",
-        "group-data-[focused=true]/day:ring-[#449690]",
-
+        defaultClassNames.day,
         className
       )}
       {...props}

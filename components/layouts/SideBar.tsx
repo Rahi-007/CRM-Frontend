@@ -23,9 +23,10 @@ interface IPropsItems {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<string | null>>;
     onToggle: () => void;
+    onRouteClick: () => void;
 }
 
-const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, setOpen }: IPropsItems) => {
+const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, setOpen, onRouteClick }: IPropsItems) => {
     const isActive = active === link || active.startsWith(link + "/");
     return (
         <li className={cn("transition-colors",
@@ -34,7 +35,14 @@ const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, s
                 : 'bg-transparent hover:bg-white/20 text-black'
         )}>
             <div className="pl-4 flex w-full items-center">
-                <Link href={link} className="w-full flex items-center gap-3 py-2" onClick={() => setOpen(null)}>
+                <Link
+                    href={link}
+                    onClick={() => {
+                        setOpen(null)
+                        onRouteClick();
+                    }}
+                    className="w-full flex items-center gap-3 py-2"
+                >
                     <Icon size={18} />
                     {title}
                 </Link>
@@ -67,7 +75,13 @@ const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, s
                 )}
                 >
                     {subItem?.map((child) => (
-                        <li key={child.href} onClick={onToggle}>
+                        <li
+                            key={child.href}
+                            onClick={() => {
+                                onToggle();
+                                onRouteClick();
+                            }}
+                        >
                             <Link
                                 href={child.href}
                                 className={cn("block rounded-xs px-2 py-2 text-sm transition-colors ",
@@ -82,14 +96,15 @@ const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, s
                     ))}
                 </ul>
             </div>
-        </li>
+        </li >
     )
 }
 
 interface IProps {
     className?: string;
+    setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const SideBar = ({ className }: IProps) => {
+const SideBar = ({ className, setSidebarOpen }: IProps) => {
     const pathname = usePathname();
     const [width, setWidth] = useState(DEFAULT_WIDTH);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -132,6 +147,12 @@ const SideBar = ({ className }: IProps) => {
         window.addEventListener("mouseup", handleMouseUp);
     };
 
+    const handleRouteClick = () => {
+        if (window.innerWidth < 768) {
+            setSidebarOpen(false);
+        }
+    };
+
     return (
         <div
             className={cn("relative min-h-[95.5vh] border-r border-gray-300 bg-[#449690]", className)}
@@ -157,6 +178,7 @@ const SideBar = ({ className }: IProps) => {
                                 prev === item.title ? null : item.title
                             )
                         }
+                        onRouteClick={handleRouteClick}
                     />
                 ))}
             </ul>
