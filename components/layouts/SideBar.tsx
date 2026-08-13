@@ -154,7 +154,7 @@ const SideBar = ({ className, setSidebarOpen }: IProps) => {
     };
 
     return (
-        <div
+        <aside
             className={cn("relative min-h-[95.5vh] border-r border-gray-300 bg-[#449690]", className)}
             style={{ width }}
         >
@@ -196,7 +196,7 @@ const SideBar = ({ className, setSidebarOpen }: IProps) => {
                     </Link>
                 </small>
             </div>
-        </div>
+        </aside>
     );
 };
 

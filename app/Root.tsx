@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 export default function Root({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector((state) => state.auth.accessToken);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
@@ -34,6 +34,20 @@ export default function Root({ children }: { children: React.ReactNode }) {
     }, 0);
   }, [dispatch]);
 
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile && sidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [sidebarOpen]);
+
   if (checking) {
     return <Loading />;
   }
@@ -50,16 +64,14 @@ export default function Root({ children }: { children: React.ReactNode }) {
     <>
       <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="relative md:flex">
-        <aside
+        <SideBar
           className={cn(
-            "absolute left-0 top-0 z-50 h-full transition-transform duration-300 ease-in-out md:static md:translate-x-0",
+            "absolute left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:static md:translate-x-0",
             sidebarOpen
               ? "translate-x-0"
               : "-translate-x-full"
           )}
-        >
-          <SideBar setSidebarOpen={setSidebarOpen} />
-        </aside>
+          setSidebarOpen={setSidebarOpen} />
 
         <main className="min-w-0 md:flex-1">
           {children}

@@ -23,7 +23,7 @@ const Page = () => {
         ]}
       />
 
-      <div className="w-full mx-auto p-4">
+      <div className="px-2 py-2 sm:px-2 sm:py-2 md:px-4 md:py-4">
         {isLoading ? (
           <FormSkeleton field={12} />
         ) : (

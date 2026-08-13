@@ -29,13 +29,11 @@ type DataTableProps<T> = AgGridReactProps<T> & {
   height?: string;
 };
 
-export default function DataTable<T>({
-  height = "72.7vh",
-  ...props
-}: DataTableProps<T>) {
+export default function DataTable<T>({ ...props }: DataTableProps<T>) {
   return (
-    <div style={{ height }}>
+    <div className="h-[73.3dvh] md:h-[69.3dvh]">
       <AgGridReact
+        {...props}
         pagination
         animateRows
         ensureDomOrder
@@ -49,7 +47,6 @@ export default function DataTable<T>({
           wrapperBorder: true,
           wrapperBorderRadius: "8px",
         })}
-        {...props}
       />
     </div>
   );

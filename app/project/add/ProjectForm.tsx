@@ -79,12 +79,12 @@ const ProjectForm = (props: Props) => {
     }
   };
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="rounded-2xl border bg-white shadow-sm">
-      <div className="border-b px-8 py-6">
+    <form onSubmit={form.handleSubmit(onSubmit)} className="rounded-xl md:rounded-2xl border bg-white shadow-sm">
+      <div className="border-b px-3 sm:px-8 py-4 sm:py-6">
         <h2 className="text-2xl font-bold">{props.title ?? "Project Form"}</h2>
       </div>
 
-      <div className="grid gap-y-1 gap-x-4 px-8 py-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-y-1 gap-x-4 px-3 sm:px-8 py-4 sm:py-6 md:grid-cols-2 xl:grid-cols-3">
         <GDatePicker.Form name="submitDate" label="Submit Date" control={form.control} placeholder="Submit Date" required />
         <GInput.Form name="name" label="Project Name" control={form.control} placeholder="Project Name" required />
         <GSelect.Form control={form.control} name="businessUnit" label="Business Unit" placeholder="Select Business Unit" options={enumToOptions(BusinessUnit)} required />
@@ -102,7 +102,7 @@ const ProjectForm = (props: Props) => {
         <GInput.Form name="submitCode" label="Submit Code" control={form.control} placeholder="Submit Code" required />
       </div>
 
-      <div className="flex justify-end rounded-b-2xl gap-3 border-t bg-slate-50 px-8 py-5">
+      <div className="flex justify-center sm:justify-end rounded-b-2xl gap-1 sm:gap-3 border-t bg-slate-50 px-8 py-4 sm:py-5">
         {props.defaultValues ? (
           <>
             <GButton

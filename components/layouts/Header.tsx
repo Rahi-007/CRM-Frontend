@@ -39,7 +39,7 @@ const Header = ({ className, setSidebarOpen, sidebarOpen }: IProps) => {
         <div className={cn("h-[4.5vh] w-full bg-[#449690] flex justify-between items-center border-b border-gray-300", className)}>
             <button
                 onClick={() => setSidebarOpen((prev) => !prev)}
-                className="px-4 text-xl font-semibold cursor-pointer"
+                className="px-4 text-xl font-semibold"
             >
                 <span className={`inline-block md:hidden transition-transform duration-500 ${sidebarOpen ? "italic -skew-x-6" : "not-italic skew-x-0"}`}>
                     UnityOps Soft
@@ -53,12 +53,12 @@ const Header = ({ className, setSidebarOpen, sidebarOpen }: IProps) => {
                     onClick={() => setOpen((prev) => !prev)}
                     className="cursor-pointer px-2 py-2 hover:bg-white/20"
                 >
-                    <span className="text-lg font-semibold sm:hidden">{user?.firstName}</span>
-                    <span className="text-lg font-semibold hidden sm:block">{user?.firstName} {user?.firstName ?? ""}</span>
+                    <span className="text-lg font-semibold sm:hidden pl-10">{user?.firstName}</span>
+                    <span className="text-lg font-semibold hidden sm:block">{user?.firstName} {user?.lastName ?? ""}</span>
                 </button>
                 <div
                     className={cn(
-                        "absolute left-0 right-0 top-full shadow-sm rounded-sm transition-all duration-200 bg-green-50",
+                        "absolute left-0 right-0 top-full shadow-sm rounded-sm transition-all duration-200 bg-green-50 z-1",
                         open
                             ? "translate-y-0 opacity-100 visible"
                             : "-translate-y-2 opacity-0 invisible"

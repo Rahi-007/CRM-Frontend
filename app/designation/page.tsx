@@ -10,7 +10,7 @@ const page = () => {
         description="Manage Designations, permission and user access."
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Designation" }]}
       />
-      <div className="p-6">
+      <div className="px-1 py-2 sm:px-2 sm:py-2 md:px-4 md:py-4">
         <ComingSoonCard />
       </div>
     </Container>

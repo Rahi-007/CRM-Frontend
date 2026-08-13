@@ -57,12 +57,12 @@ const ClientForm = (props: IProps) => {
     }
   };
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="rounded-2xl border bg-white shadow-sm">
-      <div className="border-b px-8 py-6">
+    <form onSubmit={form.handleSubmit(onSubmit)} className="rounded-xl md:rounded-2xl border bg-white shadow-sm">
+      <div className="border-b px-3 sm:px-8 py-4 sm:py-6">
         <h2 className="text-2xl font-bold">{props.title ?? "Client Form"}</h2>
       </div>
 
-      <div className="grid gap-y-1 gap-x-4 px-8 py-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-y-1 gap-x-4 px-3 sm:px-8 py-4 sm:py-6 md:grid-cols-2 xl:grid-cols-3">
         <GInput.Form name="firstName" label="First Name" control={form.control} placeholder="John" required />
         <GInput.Form name="lastName" label="Last Name" control={form.control} placeholder="Doe" />
         <GInput.Form name="phone" label="Phone Number" control={form.control} placeholder="01xxxxxxxxx" required />
@@ -73,7 +73,7 @@ const ClientForm = (props: IProps) => {
       </div>
 
 
-      <div className="flex justify-end rounded-b-2xl gap-3 border-t bg-slate-50 px-8 py-5">
+      <div className="flex justify-center sm:justify-end rounded-b-2xl gap-1 sm:gap-3 border-t bg-slate-50 px-8 py-4 sm:py-5">
         {props.defaultValues ? (
           <>
             <GButton

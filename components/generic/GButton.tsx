@@ -66,7 +66,7 @@ const GButton = ({
             variant={action === "delete" || action === "reset" ? "outline" : "default"}
             disabled={loading || props.disabled}
             className={cn(
-                "min-w-36 cursor-pointer transition-all duration-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60",
+                "min-w-32 sm:min-w-36 cursor-pointer transition-all duration-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60",
                 btn.className,
                 className
             )}

@@ -16,7 +16,7 @@ const Page = () => {
         description="Manage client information and contact details."
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Client" }]}
       />
-      <div className="p-4">
+      <div className="px-1 py-2 sm:px-2 sm:py-2 md:px-4 md:py-4">
         {isLoading ? (
           <TableSkeleton />
         ) : (

@@ -21,10 +21,10 @@ export default function PageHeader({
   action,
 }: PageHeaderProps) {
   return (
-    <div className="border-b bg-white h-[16vh]">
-      <div className="w-full mx-auto px-8 py-6">
+    <div className="border-b bg-white h-[16vh] md:h-[18vh]">
+      <div className="w-full mx-auto px-3 pt-3 md:px-8 md:py-4 xl:py-6">
         {breadcrumbs.length > 0 && (
-          <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <div className="mb-2 md:mb-3 flex flex-wrap items-center gap-2 text-sm text-slate-500">
             <House className="h-4 w-4" />
 
             {breadcrumbs.map((item, index) => {
@@ -61,9 +61,10 @@ export default function PageHeader({
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-slate-800">{title}</h1>
-
             {description && (
-              <p className="mt-2 text-slate-500">{description}</p>
+              <p className="mt-1 sm:mt-2 text-slate-500 text-xs sm:text-sm md:text-md truncate">
+                {description}
+              </p>
             )}
           </div>
 

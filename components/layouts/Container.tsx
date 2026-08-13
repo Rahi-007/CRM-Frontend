@@ -6,9 +6,9 @@ interface IProps {
   className?: string;
 }
 
-const Container = ({children, className}: IProps) => {
+const Container = ({ children, className }: IProps) => {
   return (
-    <div className={cn("w-full min-h-[92.2vh] bg-[#F6FBFA] border border-gray-300", className)}>
+    <div className={cn("w-full min-h-[92.4vh] bg-[#F6FBFA] border border-gray-300", className)}>
       {children}
     </div>
   )
