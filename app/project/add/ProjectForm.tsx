@@ -27,7 +27,7 @@ const ProjectSchema = z.object({
   quantity: z.number({ message: "Enter the quantity" }),
   submitDate: z.string().min(1, "Enter the submit date"),
   submitCode: z.string({ message: "Enter the submit code" }),
-  status: z.number({ message: "Status is Required", }),
+  status: z.number({ message: "Status is Required" }),
   assignedToId: z.string({ message: "Assign a user" }),
   link: z.string().optional(),
 });
@@ -87,7 +87,14 @@ const ProjectForm = (props: Props) => {
       <div className="grid gap-y-1 gap-x-4 px-3 sm:px-8 py-4 sm:py-6 md:grid-cols-2 xl:grid-cols-3">
         <GDatePicker.Form name="submitDate" label="Submit Date" control={form.control} placeholder="Submit Date" required />
         <GInput.Form name="name" label="Project Name" control={form.control} placeholder="Project Name" required />
-        <GSelect.Form control={form.control} name="businessUnit" label="Business Unit" placeholder="Select Business Unit" options={enumToOptions(BusinessUnit)} required />
+        <GSelect.Form
+          control={form.control}
+          name="businessUnit"
+          label="Business Unit"
+          placeholder="Select Business Unit"
+          options={enumToOptions(BusinessUnit)}
+          required
+        />
 
         <Client.Form control={form.control} name="clientId" label="Client" required />
         <User.Form control={form.control} name="assignedToId" label="Assign User" required />
@@ -123,25 +130,13 @@ const ProjectForm = (props: Props) => {
               }}
             />
 
-            <GButton
-              action="update"
-              type="submit"
-              loading={form.formState.isSubmitting}
-            />
+            <GButton action="update" type="submit" loading={form.formState.isSubmitting} />
           </>
         ) : (
           <>
-            <GButton
-              action="reset"
-              type="reset"
-              onClick={() => form.reset()}
-            />
+            <GButton action="reset" type="reset" onClick={() => form.reset()} />
 
-            <GButton
-              action="add"
-              type="submit"
-              loading={form.formState.isSubmitting}
-            />
+            <GButton action="add" type="submit" loading={form.formState.isSubmitting} />
           </>
         )}
       </div>

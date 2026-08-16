@@ -9,10 +9,10 @@ export interface IUser {
   // avatar?: string;
   dateOfBirth?: Date;
   gender?: Gender;
-  // role: {
-  //   id: number;
-  //   name: string;
-  // };
+  role: {
+    id: number;
+    name: string;
+  };
   team?: {
     id: number;
     name: string;
@@ -42,6 +42,7 @@ export interface IAddUser {
   phone: string;
   address?: string;
   // avatar?: string;
+  roleId: number;
   password: string;
   dateOfBirth?: Date;
   gender?: Gender;
@@ -58,5 +59,6 @@ export interface IUpdateUser {
   dateOfBirth?: Date;
   gender?: Gender;
   teamId?: number;
+  roleId: number;
   rfId?: string;
 }

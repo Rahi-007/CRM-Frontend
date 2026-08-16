@@ -34,11 +34,13 @@ const LoginForm = () => {
 
   const onSubmit = async (values: LoginFormValues) => {
     try {
-      const { accessToken, user } = await login(values).unwrap();
+      const { accessToken, user, permissions } = await login(values).unwrap();
       localStorage.setItem("authorization", accessToken);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("permissions", JSON.stringify(permissions));
 
-      dispatch(setAuth({ accessToken, user }));
+
+      dispatch(setAuth({ accessToken, user, permissions }));
       toast.success(`Welcome Back ${user.firstName} ${user.firstName ?? ""}`);
     } catch {
       toast.error("Something went wrong");

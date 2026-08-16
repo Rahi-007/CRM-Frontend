@@ -72,7 +72,6 @@ const ClientForm = (props: IProps) => {
         </div>
       </div>
 
-
       <div className="flex justify-center sm:justify-end rounded-b-2xl gap-1 sm:gap-3 border-t bg-slate-50 px-8 py-4 sm:py-5">
         {props.defaultValues ? (
           <>
@@ -94,25 +93,13 @@ const ClientForm = (props: IProps) => {
               }}
             />
 
-            <GButton
-              action="update"
-              type="submit"
-              loading={form.formState.isSubmitting}
-            />
+            <GButton action="update" type="submit" loading={form.formState.isSubmitting} />
           </>
         ) : (
           <>
-            <GButton
-              action="reset"
-              type="reset"
-              onClick={() => form.reset()}
-            />
+            <GButton action="reset" type="reset" onClick={() => form.reset()} />
 
-            <GButton
-              action="add"
-              type="submit"
-              loading={form.formState.isSubmitting}
-            />
+            <GButton action="add" type="submit" loading={form.formState.isSubmitting} />
           </>
         )}
       </div>

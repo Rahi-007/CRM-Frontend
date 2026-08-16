@@ -12,19 +12,21 @@ import { cn } from "@/lib/utils";
 
 export default function Root({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
-  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  const accessToken = useAppSelector(state => state.auth.accessToken);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("authorization");
     const user = localStorage.getItem("user");
+    const permissions = localStorage.getItem("permissions");
 
-    if (token && user) {
+    if (token && user && permissions) {
       dispatch(
         setAuth({
           accessToken: token,
           user: JSON.parse(user),
+          permissions: JSON.parse(permissions),
         })
       );
     }
@@ -67,11 +69,10 @@ export default function Root({ children }: { children: React.ReactNode }) {
         <SideBar
           className={cn(
             "absolute left-0 top-0 z-50 transition-transform duration-300 ease-in-out md:static md:translate-x-0",
-            sidebarOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
           )}
-          setSidebarOpen={setSidebarOpen} />
+          setSidebarOpen={setSidebarOpen}
+        />
 
         <main className="min-w-0 md:flex-1">
           {children}

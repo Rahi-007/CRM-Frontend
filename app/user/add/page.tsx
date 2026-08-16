@@ -1,10 +1,11 @@
-import Container from "@/components/layouts/Container";
 import UserForm from "./UserForm";
 import PageHeader from "@/components/layouts/PageHeader";
+import Container from "@/components/layouts/Container";
+import { PERMISSIONS } from "@/config/const";
 
 const Page = () => {
   return (
-    <Container>
+    <Container permission={PERMISSIONS.USERS_CREATE}>
       <PageHeader
         title="Add New User"
         description="Create a new user account and assign permissions."

@@ -1,10 +1,11 @@
 import Container from "@/components/layouts/Container";
 import PageHeader from "@/components/layouts/PageHeader";
+import { PERMISSIONS } from "@/config/const";
 import ClientForm from "./ClientForm";
 
 const page = () => {
   return (
-    <Container>
+    <Container permission={PERMISSIONS.CLIENTS_CREATE}>
       <PageHeader
         title="Add New Client"
         description="Create a new client profile and add contact information."

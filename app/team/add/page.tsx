@@ -1,10 +1,11 @@
 import Container from "@/components/layouts/Container";
 import PageHeader from "@/components/layouts/PageHeader";
 import TeamForm from "./TeamForm";
+import { PERMISSIONS } from "@/config/const";
 
 const page = () => {
   return (
-    <Container>
+    <Container permission={PERMISSIONS.TEAMS_CREATE}>
       <PageHeader
         title="Add New Team"
         description="Create a team and add members to collaborate effectively."

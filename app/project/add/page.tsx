@@ -1,10 +1,11 @@
 import Container from "@/components/layouts/Container";
 import PageHeader from "@/components/layouts/PageHeader";
+import { PERMISSIONS } from "@/config/const";
 import ProjectForm from "./ProjectForm";
 
 const page = () => {
   return (
-    <Container>
+    <Container permission={PERMISSIONS.PROJECTS_CREATE}>
       <PageHeader
         title="Add New Project"
         description="Create a project, assign members, and start tracking progress."

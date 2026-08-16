@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { ChevronDown, LucideIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import menus from "../../lib/menu"
+import menus from "../../config/menu"
+import Access from "./Access";
 
 const MIN_WIDTH = 220;
 const MAX_WIDTH = 420;
@@ -19,6 +20,7 @@ interface IPropsItems {
     subItem: {
         title: string;
         href: string;
+        permission: string;
     }[] | undefined;
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<string | null>>;
@@ -75,24 +77,25 @@ const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, s
                 )}
                 >
                     {subItem?.map((child) => (
-                        <li
-                            key={child.href}
-                            onClick={() => {
-                                onToggle();
-                                onRouteClick();
-                            }}
-                        >
-                            <Link
-                                href={child.href}
-                                className={cn("block rounded-xs px-2 py-2 text-sm transition-colors ",
-                                    active === child.href
-                                        ? "bg-black/20 hover:bg-black/15"
-                                        : "hover:bg-white/15"
-                                )}
+                        <Access key={child.href} permission={child.permission}>
+                            <li
+                                onClick={() => {
+                                    onToggle();
+                                    onRouteClick();
+                                }}
                             >
-                                {child.title}
-                            </Link>
-                        </li>
+                                <Link
+                                    href={child.href}
+                                    className={cn("block rounded-xs px-2 py-2 text-sm transition-colors ",
+                                        active === child.href
+                                            ? "bg-black/20 hover:bg-black/15"
+                                            : "hover:bg-white/15"
+                                    )}
+                                >
+                                    {child.title}
+                                </Link>
+                            </li>
+                        </Access>
                     ))}
                 </ul>
             </div>
@@ -164,22 +167,23 @@ const SideBar = ({ className, setSidebarOpen }: IProps) => {
 
             <ul className="bg- [#53a78d] ml-3">
                 {menus.map((item) => (
-                    <MenuItems
-                        key={item.title}
-                        title={item.title}
-                        icon={item.icon}
-                        link={item.href}
-                        subItem={item.children}
-                        active={pathname}
-                        open={openMenu === item.title}
-                        setOpen={setOpenMenu}
-                        onToggle={() =>
-                            setOpenMenu((prev) =>
-                                prev === item.title ? null : item.title
-                            )
-                        }
-                        onRouteClick={handleRouteClick}
-                    />
+                    <Access key={item.title} permission={item.permission}>
+                        <MenuItems
+                            title={item.title}
+                            icon={item.icon}
+                            link={item.href}
+                            subItem={item.children}
+                            active={pathname}
+                            open={openMenu === item.title}
+                            setOpen={setOpenMenu}
+                            onToggle={() =>
+                                setOpenMenu((prev) =>
+                                    prev === item.title ? null : item.title
+                                )
+                            }
+                            onRouteClick={handleRouteClick}
+                        />
+                    </Access>
                 ))}
             </ul>
 

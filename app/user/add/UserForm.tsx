@@ -52,9 +52,7 @@ const UserForm = (props: IProps) => {
   const [updateUser] = useUpdateUserMutation();
   const [handleDelete] = useDeleteUserMutation();
   const [showPass, setShowPass] = useState(false);
-  const schema = props.defaultValues
-    ? UpdateUserSchema
-    : CreateUserSchema;
+  const schema = props.defaultValues ? UpdateUserSchema : CreateUserSchema;
 
   const form = useForm<CreateUserFormValues | UpdateUserFormValues>({
     resolver: zodResolver(schema),
@@ -102,7 +100,16 @@ const UserForm = (props: IProps) => {
         <GInput.Form name="rfId" label="RFID" control={form.control} placeholder="Employee Id" />
 
         <GInput.Form name="phone" label="Phone Number" control={form.control} placeholder="01xxxxxxxxx" required />
-        {!props.defaultValues && <GInput.Form type={showPass ? "text" : "password"} name="password" label="Password" control={form.control} placeholder="••••••••" required />}
+        {!props.defaultValues && (
+          <GInput.Form
+            type={showPass ? "text" : "password"}
+            name="password"
+            label="Password"
+            control={form.control}
+            placeholder="••••••••"
+            required
+          />
+        )}
         <Team.Form control={form.control} name="teamId" label="Team Name" />
 
         <GSelect.Form control={form.control} name="gender" label="Gender" placeholder="Select Gender" options={enumToOptions(Gender)} />
@@ -140,29 +147,17 @@ const UserForm = (props: IProps) => {
               }}
             />
 
-            <GButton
-              action="update"
-              type="submit"
-              loading={form.formState.isSubmitting}
-            />
+            <GButton action="update" type="submit" loading={form.formState.isSubmitting} />
           </>
         ) : (
           <>
-            <GButton
-              action="reset"
-              type="reset"
-              onClick={() => form.reset()}
-            />
+            <GButton action="reset" type="reset" onClick={() => form.reset()} />
 
-            <GButton
-              action="add"
-              type="submit"
-              loading={form.formState.isSubmitting}
-            />
+            <GButton action="add" type="submit" loading={form.formState.isSubmitting} />
           </>
         )}
       </div>
-    </form >
+    </form>
   );
 };
 
