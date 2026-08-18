@@ -87,12 +87,39 @@ const menus = [
     href: "/reports",
     icon: BarChart3,
     permission: PERMISSIONS.USERS_VIEW,
+    children: [
+      {
+        title: "Designer Wise Report",
+        href: "/reports/#1",
+        permission: PERMISSIONS.USERS_VIEW,
+      },
+      {
+        title: "Client Wise Report",
+        href: "/reports/#2",
+        permission: PERMISSIONS.USERS_VIEW,
+      },
+      {
+        title: "Team Wise Report",
+        href: "/reports/#3",
+        permission: PERMISSIONS.USERS_VIEW,
+      },
+      {
+        title: "TOP Performer",
+        href: "/reports/#4",
+        permission: PERMISSIONS.USERS_VIEW,
+      },
+      {
+        title: "Summary Report",
+        href: "/reports/#5",
+        permission: PERMISSIONS.USERS_VIEW,
+      },
+    ],
   },
   {
     title: "Settings",
     href: "/settings",
     icon: Settings,
-    permission: PERMISSIONS.USERS_VIEW,
+    permission: PERMISSIONS.SYSTEM_SETTINGS,
   },
 ];
 export default menus;

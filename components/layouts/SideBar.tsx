@@ -69,7 +69,7 @@ const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, s
             <div
                 className={cn(
                     "overflow-hidden transition-all duration-500 ease-in-out",
-                    open ? "max-h-40 opacity-100 mt-1" : "max-h-0 opacity-0"
+                    open ? "max-h-50 opacity-100 mt-1" : "max-h-0 opacity-0"
                 )}
             >
                 <ul className={cn("ml-8 space-y-1 border-l  pl-4",

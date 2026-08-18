@@ -16,7 +16,6 @@ export const PERMISSIONS = {
     PROJECTS_CREATE: "projects.create",
     PROJECTS_EDIT: "projects.edit",
     PROJECTS_DELETE: "projects.delete",
-    PROJECTS_ASSIGN: "projects.assign",
 
     CLIENTS_VIEW: "clients.view",
     CLIENTS_CREATE: "clients.create",

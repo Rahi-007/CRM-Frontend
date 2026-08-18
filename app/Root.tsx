@@ -1,14 +1,15 @@
 "use client";
 
 import Loading from "./loading";
+import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hook/reduxHooks";
 import { setAuth } from "@/context/slice/auth.slice";
+import { logout } from "@/service/auth.service";
 import Footer from "@/components/layouts/Footer";
 import Header from "@/components/layouts/Header";
 import SideBar from "@/components/layouts/SideBar";
 import Login from "@/components/layouts/LoginForm";
-import { cn } from "@/lib/utils";
 
 export default function Root({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
@@ -20,8 +21,17 @@ export default function Root({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("authorization");
     const user = localStorage.getItem("user");
     const permissions = localStorage.getItem("permissions");
+    const loginAt = localStorage.getItem("loginAt");
 
-    if (token && user && permissions) {
+    const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+
+    if (token && user && permissions && loginAt) {
+      if (Date.now() - new Date(loginAt).getTime() >= THIRTY_DAYS) {
+        logout();
+        window.location.href = "/login";
+        return;
+      }
+
       dispatch(
         setAuth({
           accessToken: token,

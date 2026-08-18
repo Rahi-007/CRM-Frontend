@@ -38,7 +38,7 @@ const LoginForm = () => {
       localStorage.setItem("authorization", accessToken);
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("permissions", JSON.stringify(permissions));
-
+      localStorage.setItem("loginAt", new Date().toISOString());
 
       dispatch(setAuth({ accessToken, user, permissions }));
       toast.success(`Welcome Back ${user.firstName} ${user.firstName ?? ""}`);

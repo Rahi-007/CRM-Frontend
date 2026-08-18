@@ -18,6 +18,8 @@ export function logout() {
   if (typeof window !== "undefined") {
     window.localStorage.removeItem("authorization");
     window.localStorage.removeItem("user");
+    window.localStorage.removeItem("permissions");
+    window.localStorage.removeItem("loginAt");
   }
 }
 
