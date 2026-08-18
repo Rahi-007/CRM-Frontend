@@ -4,7 +4,7 @@ import { PERMISSIONS } from "@/config/const";
 
 const page = () => {
   return (
-    <Container permission={PERMISSIONS.USERS_VIEW}>
+    <Container permission={PERMISSIONS.SYSTEM_SETTINGS}>
       <div className="p-2 sm:p-3 md:p-4 xl:p-6">
         <ComingSoonCard />
       </div>

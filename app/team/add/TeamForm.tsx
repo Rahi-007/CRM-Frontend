@@ -6,7 +6,9 @@ import { useAddTeamMutation, useDeleteTeamMutation, useUpdateTeamMutation } from
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import type { ITeam } from "@/interface/team.interface";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PERMISSIONS } from "@/config/const";
 import GButton from "@/components/generic/GButton";
+import Access from "@/components/layouts/Access";
 import GInput from "@/components/generic/GInput";
 import User from "@/components/futures/User";
 import toast from "react-hot-toast";
@@ -72,30 +74,33 @@ const TeamForm = (props: IProps) => {
       <div className="flex justify-center sm:justify-end rounded-b-2xl gap-1 sm:gap-3 border-t bg-slate-50 px-8 py-4 sm:py-5">
         {props.defaultValues ? (
           <>
-            <GButton
-              action="delete"
-              type="button"
-              onClick={async () => {
-                if (!props.defaultValues?.id) return;
+            <Access permission={PERMISSIONS.TEAMS_DELETE}>
+              <GButton
+                action="delete"
+                type="button"
+                onClick={async () => {
+                  if (!props.defaultValues?.id) return;
 
-                try {
-                  await handleDelete(props.defaultValues?.id).unwrap();
-                  toast.success("Team deleted successfully");
-                } catch (err) {
-                  const error = err as FetchBaseQueryError & {
-                    data?: { message?: string };
-                  };
-                  toast.error(error.data?.message ?? "Something went wrong");
-                }
-              }}
-            />
+                  try {
+                    await handleDelete(props.defaultValues?.id).unwrap();
+                    toast.success("Team deleted successfully");
+                  } catch (err) {
+                    const error = err as FetchBaseQueryError & {
+                      data?: { message?: string };
+                    };
+                    toast.error(error.data?.message ?? "Something went wrong");
+                  }
+                }}
+              />
+            </Access>
 
-            <GButton action="update" type="submit" loading={form.formState.isSubmitting} />
+            <Access permission={PERMISSIONS.TEAMS_EDIT}>
+              <GButton action="update" type="submit" loading={form.formState.isSubmitting} />
+            </Access>
           </>
         ) : (
           <>
             <GButton action="reset" type="reset" onClick={() => form.reset()} />
-
             <GButton action="add" type="submit" loading={form.formState.isSubmitting} />
           </>
         )}

@@ -2,13 +2,12 @@
 
 import { ColDef } from "ag-grid-community";
 import { IUser } from "@/interface/user.interface";
-import { SquarePen, Trash2 } from "lucide-react";
-import { ICellRendererParams } from "ag-grid-community";
+import { useAppSelector } from "@/hook/reduxHooks";
 import { useDeleteUserMutation } from "@/service/user.service";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { createActionColumn } from "@/components/layouts/AgGridActionColumn";
+import { hasAnyPermission } from "@/lib/utils";
+import { PERMISSIONS } from "@/config/const";
 import DataTable from "@/components/layouts/DataTable";
-import toast from "react-hot-toast";
-import Link from "next/link";
 
 interface IProps {
   data: IUser[];
@@ -16,6 +15,15 @@ interface IProps {
 
 export default function UserTable({ data }: IProps) {
   const [deleteUser] = useDeleteUserMutation();
+  const userPermissions = useAppSelector(state => state.auth.permissions);
+  const canShowAction = hasAnyPermission(userPermissions, [PERMISSIONS.USERS_EDIT, PERMISSIONS.USERS_DELETE]);
+  const actionColumn = createActionColumn<IUser>({
+    editPermission: PERMISSIONS.USERS_EDIT,
+    deletePermission: PERMISSIONS.USERS_DELETE,
+    editUrl: user => `/user/${user.id}`,
+    onDelete: user => deleteUser(user.id).unwrap(),
+    deleteSuccessMessage: "User deleted successfully",
+  });
 
   const columnDefs: ColDef<IUser>[] = [
     {
@@ -30,6 +38,13 @@ export default function UserTable({ data }: IProps) {
       sortable: true,
       filter: true,
       flex: 1.5,
+    },
+    {
+      headerName: "Role",
+      valueGetter: params => params.data?.role?.name ?? "-",
+      sortable: true,
+      filter: true,
+      flex: 1.2,
     },
     {
       headerName: "Phone",
@@ -85,39 +100,7 @@ export default function UserTable({ data }: IProps) {
       },
       width: 100,
     },
-    {
-      headerName: "Action",
-      field: "id",
-      width: 140,
-      sortable: false,
-      filter: false,
-      headerComponent: () => <div className="w-full text-center font-semibold">Action</div>,
-      cellRenderer: (params: ICellRendererParams<IUser>) => (
-        <div className="flex items-center justify-center gap-2 h-6">
-          <Link href={`/user/${params.data?.id}`}>
-            <SquarePen className="h-4 w-4 hover:text-blue-600" />
-          </Link>
-
-          <button
-            onClick={async () => {
-              if (!params.data?.id) return;
-
-              try {
-                await deleteUser(params.data.id).unwrap();
-                toast.success("User deleted successfully");
-              } catch (err) {
-                const error = err as FetchBaseQueryError & {
-                  data?: { message?: string };
-                };
-                toast.error(error.data?.message ?? "Something went wrong");
-              }
-            }}
-          >
-            <Trash2 className="h-4 w-4 text-red-500" />
-          </button>
-        </div>
-      ),
-    },
+    ...(canShowAction ? [actionColumn] : []),
   ];
 
   return <DataTable rowData={data} columnDefs={columnDefs} />;

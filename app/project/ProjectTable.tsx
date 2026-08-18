@@ -2,13 +2,13 @@
 
 import { ColDef } from "ag-grid-community";
 import { ProjectStatus } from "@/config/enum";
-import { SquarePen, Trash2 } from "lucide-react";
-import { ICellRendererParams } from "ag-grid-community";
-import type { IProject } from "@/interface/project.interface";
 import { useDeleteProjectMutation } from "@/service/project.service";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { createActionColumn } from "@/components/layouts/AgGridActionColumn";
+import type { IProject } from "@/interface/project.interface";
+import { hasAnyPermission } from "@/lib/utils";
+import { useAppSelector } from "@/hook/reduxHooks";
+import { PERMISSIONS } from "@/config/const";
 import DataTable from "@/components/layouts/DataTable";
-import toast from "react-hot-toast";
 import Link from "next/link";
 
 interface IProps {
@@ -17,6 +17,15 @@ interface IProps {
 
 export default function ProjectTable({ data }: IProps) {
   const [deleteProject] = useDeleteProjectMutation();
+  const userPermissions = useAppSelector(state => state.auth.permissions);
+  const canShowAction = hasAnyPermission(userPermissions, [PERMISSIONS.PROJECTS_EDIT, PERMISSIONS.PROJECTS_DELETE]);
+  const actionColumn = createActionColumn<IProject>({
+    editPermission: PERMISSIONS.PROJECTS_EDIT,
+    deletePermission: PERMISSIONS.PROJECTS_DELETE,
+    editUrl: project => `/project/${project.id}`,
+    onDelete: project => deleteProject(project.id).unwrap(),
+    deleteSuccessMessage: "Project deleted successfully",
+  });
 
   const columnDefs: ColDef<IProject>[] = [
     {
@@ -148,39 +157,7 @@ export default function ProjectTable({ data }: IProps) {
         );
       },
     },
-    {
-      headerName: "Action",
-      field: "id",
-      width: 100,
-      sortable: false,
-      filter: false,
-      headerComponent: () => <div className="w-full text-center font-semibold">Action</div>,
-      cellRenderer: (params: ICellRendererParams<IProject>) => (
-        <div className="flex items-center justify-center gap-2 h-6">
-          <Link href={`/project/${params.data?.id}`}>
-            <SquarePen className="h-4 w-4 hover:text-blue-600" />
-          </Link>
-
-          <button
-            onClick={async () => {
-              if (!params.data?.id) return;
-
-              try {
-                await deleteProject(params.data.id).unwrap();
-                toast.success("Project deleted successfully");
-              } catch (err) {
-                const error = err as FetchBaseQueryError & {
-                  data?: { message?: string };
-                };
-                toast.error(error.data?.message ?? "Something went wrong");
-              }
-            }}
-          >
-            <Trash2 className="h-4 w-4 text-red-500" />
-          </button>
-        </div>
-      ),
-    },
+    ...(canShowAction ? [actionColumn] : []),
   ];
 
   return <DataTable rowData={data} columnDefs={columnDefs} />;

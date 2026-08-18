@@ -1,7 +1,7 @@
 "use client";
 
-import { ITeam } from "@/interface/team.interface";
-import { useDeleteTeamMutation } from "@/service/team.service";
+import { IDesignation } from "@/interface/designation.interface";
+import { useDeleteDesignationMutation } from "@/service/designation.service";
 import { createActionColumn } from "@/components/layouts/AgGridActionColumn";
 import { useAppSelector } from "@/hook/reduxHooks";
 import { hasAnyPermission } from "@/lib/utils";
@@ -10,37 +10,30 @@ import { ColDef } from "ag-grid-community";
 import DataTable from "@/components/layouts/DataTable";
 
 interface IProps {
-  data: ITeam[];
+  data: IDesignation[];
 }
 
-export default function TeamTable({ data }: IProps) {
-  const [handleDelete] = useDeleteTeamMutation();
+export default function DesignationTable({ data }: IProps) {
+  const [handleDelete] = useDeleteDesignationMutation();
   const userPermissions = useAppSelector(state => state.auth.permissions);
-  const canShowAction = hasAnyPermission(userPermissions, [PERMISSIONS.TEAMS_EDIT, PERMISSIONS.TEAMS_DELETE]);
-  const actionColumn = createActionColumn<ITeam>({
-    editPermission: PERMISSIONS.TEAMS_EDIT,
-    deletePermission: PERMISSIONS.TEAMS_DELETE,
-    editUrl: team => `/team/${team.id}`,
-    onDelete: team => handleDelete(team.id).unwrap(),
-    deleteSuccessMessage: "Team deleted successfully",
+  const canShowAction = hasAnyPermission(userPermissions, [PERMISSIONS.ROLES_EDIT, PERMISSIONS.ROLES_DELETE]);
+  const actionColumn = createActionColumn<IDesignation>({
+    editPermission: PERMISSIONS.ROLES_EDIT,
+    deletePermission: PERMISSIONS.ROLES_DELETE,
+    editUrl: designation => `/designation/${designation.id}`,
+    onDelete: designation => handleDelete(designation.id).unwrap(),
+    deleteSuccessMessage: "Designation deleted successfully",
   });
 
-  const columnDefs: ColDef<ITeam>[] = [
+  const columnDefs: ColDef<IDesignation>[] = [
     {
       headerName: "ID",
       field: "id",
       width: 50,
     },
     {
-      headerName: "Team Name",
+      headerName: "Designation",
       field: "name",
-      sortable: true,
-      filter: true,
-      flex: 1,
-    },
-    {
-      headerName: "Team Leader Name",
-      field: "teamLeader.name",
       sortable: true,
       filter: true,
       flex: 1,
@@ -53,8 +46,8 @@ export default function TeamTable({ data }: IProps) {
       flex: 2,
     },
     {
-      headerName: "Total Members",
-      valueGetter: params => params.data?.members.length ?? 0,
+      headerName: "Total Permissions",
+      valueGetter: params => params.data?.permissions?.length ?? 0,
       sortable: false,
       filter: false,
       width: 120,

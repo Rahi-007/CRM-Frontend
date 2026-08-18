@@ -15,6 +15,6 @@ export const RTKApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Setting", "User", "Team", "Client", "Project"],
+  tagTypes: ["Setting", "User", "Team", "Client", "Project", "Designation"],
   endpoints: () => ({}),
 });

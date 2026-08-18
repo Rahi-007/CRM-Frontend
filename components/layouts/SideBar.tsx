@@ -50,18 +50,20 @@ const MenuItems = ({ title, icon: Icon, link, active, subItem, onToggle, open, s
                 </Link>
 
                 {subItem && (
-                    <button
-                        onClick={onToggle}
-                        className="p-2 hover:bg-black/10 transition"
-                    >
-                        <ChevronDown
-                            size={18}
-                            className={cn(
-                                "transition-transform duration-300 ease-in-out",
-                                open && "rotate-180"
-                            )}
-                        />
-                    </button>
+                    <Access permissions={subItem?.map(child => child.permission).filter(Boolean)}>
+                        <button
+                            onClick={onToggle}
+                            className="p-2 hover:bg-black/10 transition"
+                        >
+                            <ChevronDown
+                                size={18}
+                                className={cn(
+                                    "transition-transform duration-300 ease-in-out",
+                                    open && "rotate-180"
+                                )}
+                            />
+                        </button>
+                    </Access>
                 )}
             </div>
             <div

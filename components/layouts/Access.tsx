@@ -4,13 +4,26 @@ import React from "react";
 import { useAppSelector } from "@/hook/reduxHooks";
 
 interface IProps {
-    permission: string;
+    permission?: string;
+    permissions?: string[];
     children: React.ReactNode;
 }
 
-const Access = ({ permission, children }: IProps) => {
-    const permissions = useAppSelector(state => state.auth.permissions);
-    const hasPermission = permissions?.some(item => item.name === permission) ?? false;
+const Access = ({ permission, permissions, children }: IProps) => {
+    const userPermissions = useAppSelector(
+        state => state.auth.permissions
+    );
+
+    const requiredPermissions = [
+        ...(permission ? [permission] : []),
+        ...(permissions ?? []),
+    ];
+
+    const hasPermission =
+        requiredPermissions.length > 0 &&
+        userPermissions?.some(item =>
+            requiredPermissions.includes(item.name)
+        );
 
     if (!hasPermission) {
         return null;

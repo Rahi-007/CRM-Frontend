@@ -7,12 +7,14 @@ import { BusinessUnit, ProjectStatus, SubType, WorkType } from "@/config/enum";
 import { useAddProjectMutation, useDeleteProjectMutation, useUpdateProjectMutation } from "@/service/project.service";
 import type { IProject } from "@/interface/project.interface";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { PERMISSIONS } from "@/config/const";
 import { enumToOptions } from "@/lib/utils";
 import GSelect from "@/components/generic/GSelect";
 import GInput from "@/components/generic/GInput";
 import GAmount from "@/components/generic/GAmount";
 import GDatePicker from "@/components/generic/GDatePicker";
 import GButton from "@/components/generic/GButton";
+import Access from "@/components/layouts/Access";
 import Client from "@/components/futures/Client";
 import User from "@/components/futures/User";
 import toast from "react-hot-toast";
@@ -112,30 +114,33 @@ const ProjectForm = (props: Props) => {
       <div className="flex justify-center sm:justify-end rounded-b-2xl gap-1 sm:gap-3 border-t bg-slate-50 px-8 py-4 sm:py-5">
         {props.defaultValues ? (
           <>
-            <GButton
-              action="delete"
-              type="button"
-              onClick={async () => {
-                if (!props.defaultValues?.id) return;
+            <Access permission={PERMISSIONS.PROJECTS_DELETE}>
+              <GButton
+                action="delete"
+                type="button"
+                onClick={async () => {
+                  if (!props.defaultValues?.id) return;
 
-                try {
-                  await handleDelete(props.defaultValues?.id).unwrap();
-                  toast.success("User deleted successfully");
-                } catch (err) {
-                  const error = err as FetchBaseQueryError & {
-                    data?: { message?: string };
-                  };
-                  toast.error(error.data?.message ?? "Something went wrong");
-                }
-              }}
-            />
+                  try {
+                    await handleDelete(props.defaultValues?.id).unwrap();
+                    toast.success("Project deleted successfully");
+                  } catch (err) {
+                    const error = err as FetchBaseQueryError & {
+                      data?: { message?: string };
+                    };
+                    toast.error(error.data?.message ?? "Something went wrong");
+                  }
+                }}
+              />
+            </Access>
 
-            <GButton action="update" type="submit" loading={form.formState.isSubmitting} />
+            <Access permission={PERMISSIONS.PROJECTS_EDIT}>
+              <GButton action="update" type="submit" loading={form.formState.isSubmitting} />
+            </Access>
           </>
         ) : (
           <>
             <GButton action="reset" type="reset" onClick={() => form.reset()} />
-
             <GButton action="add" type="submit" loading={form.formState.isSubmitting} />
           </>
         )}
