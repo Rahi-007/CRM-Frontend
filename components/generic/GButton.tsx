@@ -4,7 +4,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type GButtonType = "add" | "update" | "delete" | "print" | "reset";
+type GButtonType = "add" | "submit" | "update" | "delete" | "print" | "reset";
 
 interface GButtonProps extends React.ComponentProps<typeof Button> {
     action: GButtonType;
@@ -22,6 +22,12 @@ const config: Record<
     add: {
         text: "Create",
         loadingText: "Creating...",
+        className:
+            "bg-[#449690] hover:bg-[#3b837d] text-white",
+    },
+    submit: {
+        text: "Submit",
+        loadingText: "Submit...",
         className:
             "bg-[#449690] hover:bg-[#3b837d] text-white",
     },

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { House, ChevronRight } from "lucide-react";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 type BreadcrumbItem = {
   label: string;
@@ -21,8 +22,8 @@ export default function PageHeader({
   action,
 }: PageHeaderProps) {
   return (
-    <div className="border-b bg-white h-[16vh] md:h-[18vh]">
-      <div className="w-full mx-auto px-3 pt-3 md:px-8 md:py-4 xl:py-6">
+    <div className={cn("border-b bg-white", action ? "" : "h-[16vh] md:h-[18vh]")}>
+      <div className={cn("w-full mx-auto px-3 md:px-8 md:py-4 ", action ? "py-3 xl:py-6" : "pt-3 xl:pt-6 xl:pb-6")}>
         {breadcrumbs.length > 0 && (
           <div className="mb-2 md:mb-3 flex flex-wrap items-center gap-2 text-sm text-slate-500">
             <House className="h-4 w-4" />
@@ -68,9 +69,9 @@ export default function PageHeader({
             )}
           </div>
 
-          {action && <div>{action}</div>}
         </div>
       </div>
+      {action && <div>{action}</div>}
     </div>
   );
 }

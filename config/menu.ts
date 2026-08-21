@@ -90,27 +90,27 @@ const menus = [
     children: [
       {
         title: "Designer Wise Report",
-        href: "/reports/#1",
+        href: "/reports/designer",
         permission: PERMISSIONS.USERS_VIEW,
       },
       {
         title: "Client Wise Report",
-        href: "/reports/#2",
+        href: "/reports/client",
         permission: PERMISSIONS.USERS_VIEW,
       },
       {
         title: "Team Wise Report",
-        href: "/reports/#3",
+        href: "/reports/team",
         permission: PERMISSIONS.USERS_VIEW,
       },
       {
         title: "TOP Performer",
-        href: "/reports/#4",
+        href: "/reports/performer",
         permission: PERMISSIONS.USERS_VIEW,
       },
       {
         title: "Summary Report",
-        href: "/reports/#5",
+        href: "/reports/summary",
         permission: PERMISSIONS.USERS_VIEW,
       },
     ],
