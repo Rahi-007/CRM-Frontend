@@ -210,3 +210,41 @@
     transform: translateY(-10px);
   }
 }
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+
+  .ag-header-cell-filter-button,
+  .ag-header-cell-menu-button,
+  .ag-header-icon {
+    display: none !important;
+  }
+
+  .report-grid .ag-header,
+  .report-grid .ag-header-cell {
+    background: #111827 !important;
+    color: #fff !important;
+  }
+
+  .report-grid .ag-header-cell-label {
+    color: #fff !important;
+    font-weight: 600;
+  }
+}
+
+.report-grid .ag-header,
+.report-grid .ag-header-cell {
+  background: #1f2937 !important;
+  color: white !important;
+}
+
+.report-grid .ag-root-wrapper {
+  border-radius: 0 !important;
+}
+
+.report-grid .ag-root {
+  border-radius: 0 !important;
+}

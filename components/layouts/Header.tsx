@@ -36,7 +36,7 @@ const Header = ({ className, setSidebarOpen, sidebarOpen }: IProps) => {
     }, []);
 
     return (
-        <div className={cn("h-[4.5vh] w-full bg-[#449690] flex justify-between items-center border-b border-gray-300", className)}>
+        <div className={cn("print:hidden h-[4.5vh] w-full bg-[#449690] flex justify-between items-center border-b border-gray-300", className)}>
             <button
                 onClick={() => setSidebarOpen((prev) => !prev)}
                 className="px-4 text-xl font-semibold"

@@ -16,7 +16,7 @@ const Container = ({ children, className, permission }: IProps) => {
 
   if (!hasPermission) {
     return (
-      <div className="flex min-h-[92.2vh] w-full items-center justify-center bg-[#F6FBFA] border border-gray-300">
+      <div className="flex min-h-[92.2vh] w-full items-center justify-center bg-[#F6FBFA] print:bg-white border border-gray-300">
         <div className="text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">
             No Access View
@@ -31,7 +31,7 @@ const Container = ({ children, className, permission }: IProps) => {
   }
 
   return (
-    <div className={cn("w-full min-h-[92.4vh] bg-[#F6FBFA] border border-gray-300", className)}>
+    <div className={cn("w-full min-h-[92.4vh] bg-[#F6FBFA] print:bg-white border border-gray-300", className)}>
       {children}
     </div>
   );

@@ -160,7 +160,7 @@ const SideBar = ({ className, setSidebarOpen }: IProps) => {
 
     return (
         <aside
-            className={cn("relative min-h-[95.5vh] border-r border-gray-300 bg-[#449690]", className)}
+            className={cn("print:hidden relative min-h-[95.5vh] border-r border-gray-300 bg-[#449690]", className)}
             style={{ width }}
         >
             <h1 style={{ fontFamily: "var(--font-salsa)" }} className="pt-1 pb-2 px-4 text-sm underline">
