@@ -8,12 +8,18 @@ import GDatePicker from "@/components/generic/GDatePicker";
 import GButton from "@/components/generic/GButton";
 import Team from "@/components/futures/Team";
 import toast from "react-hot-toast";
+import { useLazyGetTeamWiseReportQuery } from "@/service/report.service";
+
+interface IProps {
+  getReport: ReturnType<typeof useLazyGetTeamWiseReportQuery>[0];
+  resetReport: ReturnType<typeof useLazyGetTeamWiseReportQuery>[1]["reset"];
+}
 
 const TeamReportSchema = z
   .object({
     teamId: z.string({ message: "Team name is Required" }),
-    formDate: z.date({ message: "Enter form date" }),
-    toDate: z.date({ message: "Enter to date" }),
+    formDate: z.string({ message: "Enter form date" }),
+    toDate: z.string({ message: "Enter to date" }),
   })
   .refine(data => data.formDate <= data.toDate, {
     message: "To date must be greater than or equal to from date",
@@ -22,15 +28,14 @@ const TeamReportSchema = z
 
 type TeamReportFilterValues = z.infer<typeof TeamReportSchema>;
 
-const TeamReportFilter = () => {
+const TeamReportFilter = ({ getReport, resetReport }: IProps) => {
   const form = useForm<TeamReportFilterValues>({
     resolver: zodResolver(TeamReportSchema),
   });
 
   const onSubmit = async (values: TeamReportFilterValues) => {
     try {
-      // await addDesignation(values).unwrap();
-      console.log(values);
+      await getReport(values).unwrap();
       toast.success("Report generated successfully");
     } catch (err) {
       const error = err as FetchBaseQueryError & {
@@ -48,7 +53,14 @@ const TeamReportFilter = () => {
       </div>
 
       <div className="flex justify-center sm:justify-end gap-1 sm:gap-3 bg-slate-50 px-8 py-3">
-        <GButton action="reset" type="reset" onClick={() => form.reset()} />
+        <GButton
+          action="reset"
+          type="reset"
+          onClick={() => {
+            form.reset();
+            resetReport();
+          }}
+        />
         <GButton action="print" type="button" onClick={() => window.print()} className="hidden lg:block" />
         <GButton action="submit" type="submit" loading={form.formState.isSubmitting} />
       </div>

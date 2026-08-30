@@ -1,18 +1,18 @@
 "use client";
 
 import PrintLayout from "@/components/layouts/PrintLayout";
-import { IDesignerReport } from "@/interface/report.interface";
+import { ITeamReport } from "@/interface/report.interface";
 import { ProjectStatus, SubType, WorkType } from "@/config/enum";
 import { ColDef, ICellRendererParams } from "ag-grid-community";
 import ReportGrid from "@/components/layouts/DataGrid";
 import Link from "next/link";
 
 interface IProps {
-  rowData: IDesignerReport[];
+  rowData: ITeamReport[];
 }
 
-const DesignerReportDataTable = ({ rowData }: IProps) => {
-  const columnDefs: ColDef<IDesignerReport>[] = [
+const TeamReportDataTable = ({ rowData }: IProps) => {
+  const columnDefs: ColDef<ITeamReport>[] = [
     {
       headerName: "Project Name",
       field: "projectName",
@@ -20,7 +20,7 @@ const DesignerReportDataTable = ({ rowData }: IProps) => {
       filter: true,
       flex: 1.5,
       minWidth: 180,
-      cellRenderer: (params: ICellRendererParams<IDesignerReport>) => {
+      cellRenderer: (params: ICellRendererParams<ITeamReport>) => {
         const { projectId, projectName } = params.data ?? {};
 
         return (
@@ -37,12 +37,29 @@ const DesignerReportDataTable = ({ rowData }: IProps) => {
       filter: true,
       flex: 1,
       minWidth: 160,
-      cellRenderer: (params: ICellRendererParams<IDesignerReport>) => {
+      cellRenderer: (params: ICellRendererParams<ITeamReport>) => {
         const { clientId, clientName } = params.data ?? {};
 
         return (
           <Link href={`/client/${clientId}`} target="_blank" className="hover:text-blue-600 hover:underline">
             {clientName}
+          </Link>
+        );
+      },
+    },
+    {
+      headerName: "Assigned To",
+      field: "assignedToName",
+      sortable: true,
+      filter: true,
+      flex: 1,
+      minWidth: 160,
+      cellRenderer: (params: ICellRendererParams<ITeamReport>) => {
+        const { assignedToId, assignedToName } = params.data ?? {};
+
+        return (
+          <Link href={`/user/${assignedToId}`} target="_blank" className="hover:text-blue-600 hover:underline">
+            {assignedToName}
           </Link>
         );
       },
@@ -139,29 +156,29 @@ const DesignerReportDataTable = ({ rowData }: IProps) => {
         return <span className={status.className}>{status.label}</span>;
       },
     },
-    {
-      headerName: "Link",
-      field: "link",
-      sortable: false,
-      filter: false,
-      width: 90,
-      cellRenderer: (params: ICellRendererParams<IDesignerReport>) => {
-        if (!params.value) return "-";
+    // {
+    //   headerName: "Link",
+    //   field: "link",
+    //   sortable: false,
+    //   filter: false,
+    //   width: 90,
+    //   cellRenderer: (params: ICellRendererParams<ITeamReport>) => {
+    //     if (!params.value) return "-";
 
-        return (
-          <Link href={params.value} target="_blank" className="hover:text-blue-600 hover:underline">
-            View
-          </Link>
-        );
-      },
-    },
+    //     return (
+    //       <Link href={params.value} target="_blank" className="hover:text-blue-600 hover:underline">
+    //         View
+    //       </Link>
+    //     );
+    //   },
+    // },
   ];
 
   return (
-    <PrintLayout title="Designer Wise Report">
+    <PrintLayout title="Client Wise Report">
       <ReportGrid rowData={rowData} columnDefs={columnDefs} />
     </PrintLayout>
   );
 };
 
-export default DesignerReportDataTable;
+export default TeamReportDataTable;

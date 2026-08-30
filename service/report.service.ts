@@ -1,5 +1,12 @@
+import {
+    IClientReport,
+    IClientReportFilter,
+    IDesignerReport,
+    IDesignerReportFilter,
+    ITeamReport,
+    ITeamReportFilter
+} from "@/interface/report.interface";
 import { RTKApi } from "@/context/rtk-query";
-import { IDesignerReport, IDesignerReportFilter } from "@/interface/report.interface";
 
 export const reportApi = RTKApi.injectEndpoints({
     endpoints: build => ({
@@ -16,10 +23,37 @@ export const reportApi = RTKApi.injectEndpoints({
                 },
             }),
         }),
+        getClientWiseReport: build.query<
+            IClientReport[],
+            IClientReportFilter
+        >({
+            query: ({ clientId, formDate, toDate }) => ({
+                url: "v1/reports/client",
+                params: {
+                    clientId,
+                    formDate,
+                    toDate,
+                },
+            }),
+        }),
+        getTeamWiseReport: build.query<
+            ITeamReport[],
+            ITeamReportFilter
+        >({
+            query: ({ teamId, formDate, toDate }) => ({
+                url: "v1/reports/team",
+                params: {
+                    teamId,
+                    formDate,
+                    toDate,
+                },
+            }),
+        }),
     }),
 });
 
 export const {
-    useGetDesignerWiseReportQuery,
-    useLazyGetDesignerWiseReportQuery
+    useLazyGetDesignerWiseReportQuery,
+    useLazyGetClientWiseReportQuery,
+    useLazyGetTeamWiseReportQuery,
 } = reportApi;

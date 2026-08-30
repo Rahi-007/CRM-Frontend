@@ -1,9 +1,9 @@
 "use client";
 
-import PageHeader from "@/components/layouts/PageHeader";
 import Container from "@/components/layouts/Container";
-import DesignerReportDataTable from "./DataTable";
+import PageHeader from "@/components/layouts/PageHeader";
 import { useLazyGetDesignerWiseReportQuery } from "@/service/report.service";
+import DesignerReportDataTable from "./DataTable";
 import { PERMISSIONS } from "@/config/const";
 import DesignerReportFilter from "./Filter";
 
