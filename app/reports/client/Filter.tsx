@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { formatDate } from "@/lib/modifier";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLazyGetClientWiseReportQuery } from "@/service/report.service";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -11,6 +12,8 @@ import Client from "@/components/futures/Client";
 import toast from "react-hot-toast";
 
 interface IProps {
+  setDateRange: React.Dispatch<React.SetStateAction<string>>;
+  setClientName: React.Dispatch<React.SetStateAction<string>>;
   getReport: ReturnType<typeof useLazyGetClientWiseReportQuery>[0];
   resetReport: ReturnType<typeof useLazyGetClientWiseReportQuery>[1]["reset"];
 }
@@ -28,13 +31,15 @@ const ClientReportSchema = z
 
 type ClientReportFilterValues = z.infer<typeof ClientReportSchema>;
 
-const ClientReportFilter = ({ getReport, resetReport }: IProps) => {
+const ClientReportFilter = ({ getReport, setClientName, setDateRange, resetReport }: IProps) => {
   const form = useForm<ClientReportFilterValues>({
     resolver: zodResolver(ClientReportSchema),
   });
 
   const onSubmit = async (values: ClientReportFilterValues) => {
     try {
+      const { formDate, toDate } = values;
+      setDateRange(`${formatDate(formDate)} to ${formatDate(toDate)}`);
       await getReport(values).unwrap();
       toast.success("Report generated successfully");
     } catch (err) {
@@ -47,7 +52,7 @@ const ClientReportFilter = ({ getReport, resetReport }: IProps) => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid gap-y-1 gap-x-4 px-3 sm:px-8 md:grid-cols-2 xl:grid-cols-3">
-        <Client.Form control={form.control} name="clientId" label="Client Name" required />
+        <Client.Form control={form.control} name="clientId" label="Client Name" setSelectedClientName={setClientName} required />
         <GDatePicker.Form name="formDate" label="Form Date" control={form.control} placeholder="Form Date" required />
         <GDatePicker.Form name="toDate" label="To Date" control={form.control} placeholder="To Date" required />
       </div>

@@ -16,7 +16,7 @@ export interface IDesignerReport {
 
     workType: number;
     subType?: number | null;
-    status: string;
+    status: number;
     quantity: number;
     link?: string | null;
 }
@@ -37,15 +37,15 @@ export interface IClientReport {
     submitDate: string;
     submitCode: string;
 
-    workType: string;
-    subType?: string | null;
+    workType: number;
+    subType?: number | null;
     quantity: number;
-    status: string;
+    status: number;
     link?: string | null;
 }
 
 export interface ITeamReportFilter {
-    teamId: string;
+    teamId: number;
     formDate: string;
     toDate: string;
 }
@@ -63,9 +63,34 @@ export interface ITeamReport {
     submitDate: string;
     submitCode: string;
 
-    workType: string;
-    subType?: string | null;
+    workType: number;
+    subType?: number | null;
     quantity: number;
-    status: string;
+    status: number;
     link?: string | null;
+}
+export interface IPerformerReport {
+    designerId: string;
+    designerName: string;
+    designerPhone: string;
+    totalQuantity: number;
+    approvedQuantity: number;
+    submittedQuantity: number;
+    inReviewQuantity: number;
+    totalProjects: number;
+    workingHours: number;
+    approvalPercentage: number;
+    averageQuantity: number;
+}
+
+export interface IPerformerReportFilter {
+    teamId: number;
+    clientId?: string;
+    formDate: string;
+    toDate: string;
+}
+export interface ISummaryReportFilter {
+    teamId: number;
+    formDate: string;
+    toDate: string;
 }

@@ -1,8 +1,9 @@
 "use client";
 
 import { useSelectTeamsQuery } from "@/service/team.service";
-import { Control, FieldValues, Path } from "react-hook-form";
+import { Control, FieldValues, Path, useWatch } from "react-hook-form";
 import GSelect from "../generic/GSelect";
+import { useEffect } from "react";
 
 type TeamFormProps<T extends FieldValues> = {
     control: Control<T>;
@@ -11,6 +12,7 @@ type TeamFormProps<T extends FieldValues> = {
     placeholder?: string;
     disabled?: boolean;
     required?: boolean;
+    setSelectedTeamName?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function TeamSelect<T extends FieldValues>({
@@ -20,6 +22,7 @@ function TeamSelect<T extends FieldValues>({
     placeholder = "Select Team",
     disabled,
     required,
+    setSelectedTeamName
 }: TeamFormProps<T>) {
     const { data: teams = [], isLoading } = useSelectTeamsQuery();
 
@@ -27,6 +30,20 @@ function TeamSelect<T extends FieldValues>({
         label: team.name,
         value: team.id,
     }));
+
+    const selectedClientId = useWatch({
+        control,
+        name,
+    });
+
+    useEffect(() => {
+        const selectedTeam = teams.find(
+            (client) => client.id === selectedClientId
+        );
+
+        setSelectedTeamName?.(selectedTeam?.name ?? "");
+    }, [selectedClientId, teams, setSelectedTeamName]);
+
 
     return (
         <GSelect.Form

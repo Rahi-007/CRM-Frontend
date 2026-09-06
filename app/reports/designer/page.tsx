@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Container from "@/components/layouts/Container";
 import PageHeader from "@/components/layouts/PageHeader";
 import { useLazyGetDesignerWiseReportQuery } from "@/service/report.service";
@@ -8,6 +9,8 @@ import { PERMISSIONS } from "@/config/const";
 import DesignerReportFilter from "./Filter";
 
 const Page = () => {
+  const [dateRange, setDateRange] = useState<string>("");
+  const [designerName, setDesignerName] = useState<string>("");
   const [getDesignerWiseReport, { isLoading, data, isSuccess, reset: resetReport }] = useLazyGetDesignerWiseReportQuery();
 
   return (
@@ -15,14 +18,21 @@ const Page = () => {
       <PageHeader
         title="Designer Wise Report"
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Reports", href: "/reports" }, { label: "Designer Wise Report" }]}
-        action={<DesignerReportFilter getReport={getDesignerWiseReport} resetReport={resetReport} />}
+        action={
+          <DesignerReportFilter
+            getReport={getDesignerWiseReport}
+            resetReport={resetReport}
+            setDesignerName={setDesignerName}
+            setDateRange={setDateRange}
+          />
+        }
       />
       {isLoading ? (
         <div className="flex min-h-75 items-center justify-center">
           <p className="text-sm text-gray-500">Loading report...</p>
         </div>
       ) : isSuccess && data && data.length > 0 ? (
-        <DesignerReportDataTable rowData={data} />
+        <DesignerReportDataTable rowData={data} name={`Designer Name: ${designerName}`} dateRange={dateRange} />
       ) : isSuccess ? (
         <div className="flex min-h-75 items-center justify-center">
           <p className="text-sm text-gray-500">No report data found for the selected filters.</p>

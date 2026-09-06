@@ -9,9 +9,11 @@ import Link from "next/link";
 
 interface IProps {
   rowData: IDesignerReport[];
+  name: string;
+  dateRange: string;
 }
 
-const DesignerReportDataTable = ({ rowData }: IProps) => {
+const DesignerReportDataTable = ({ rowData, name, dateRange }: IProps) => {
   const columnDefs: ColDef<IDesignerReport>[] = [
     {
       headerName: "Project Name",
@@ -60,7 +62,7 @@ const DesignerReportDataTable = ({ rowData }: IProps) => {
       headerName: "Sub Type",
       field: "subType",
       sortable: true,
-      filter: true,
+      filter: false,
       width: 100,
       cellRenderer: (params: { value: number }) => <span>{SubType[params.value] ?? "-"}</span>,
     },
@@ -68,8 +70,11 @@ const DesignerReportDataTable = ({ rowData }: IProps) => {
       headerName: "Qty",
       field: "quantity",
       sortable: true,
-      filter: "agNumberColumnFilter",
+      filter: false,
       width: 60,
+      cellRenderer: (params: { value: number }) => {
+        return <div className="text-center">{params.value}</div>;
+      },
     },
     {
       headerName: "Submit Date",
@@ -91,7 +96,7 @@ const DesignerReportDataTable = ({ rowData }: IProps) => {
       headerName: "Submit Code",
       field: "submitCode",
       sortable: true,
-      filter: true,
+      filter: false,
       width: 140,
     },
     {
@@ -158,7 +163,7 @@ const DesignerReportDataTable = ({ rowData }: IProps) => {
   ];
 
   return (
-    <PrintLayout title="Designer Wise Report">
+    <PrintLayout title="Designer Wise Report" subTitle={name} dateRange={dateRange}>
       <ReportGrid rowData={rowData} columnDefs={columnDefs} />
     </PrintLayout>
   );

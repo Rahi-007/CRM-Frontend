@@ -3,8 +3,11 @@ import {
     IClientReportFilter,
     IDesignerReport,
     IDesignerReportFilter,
+    IPerformerReportFilter,
+    ISummaryReportFilter,
+    ITeamReportFilter,
     ITeamReport,
-    ITeamReportFilter
+    IPerformerReport,
 } from "@/interface/report.interface";
 import { RTKApi } from "@/context/rtk-query";
 
@@ -49,6 +52,33 @@ export const reportApi = RTKApi.injectEndpoints({
                 },
             }),
         }),
+        getPerformerReport: build.query<
+            IPerformerReport[],
+            IPerformerReportFilter
+        >({
+            query: ({ teamId, clientId, formDate, toDate }) => ({
+                url: "v1/reports/performer",
+                params: {
+                    clientId,
+                    teamId,
+                    formDate,
+                    toDate,
+                },
+            }),
+        }),
+        getSummaryReport: build.query<
+            IPerformerReport[],
+            ISummaryReportFilter
+        >({
+            query: ({ teamId, formDate, toDate }) => ({
+                url: "v1/reports/summary",
+                params: {
+                    teamId,
+                    formDate,
+                    toDate,
+                },
+            }),
+        }),
     }),
 });
 
@@ -56,4 +86,6 @@ export const {
     useLazyGetDesignerWiseReportQuery,
     useLazyGetClientWiseReportQuery,
     useLazyGetTeamWiseReportQuery,
+    useLazyGetPerformerReportQuery,
+    useLazyGetSummaryReportQuery,
 } = reportApi;

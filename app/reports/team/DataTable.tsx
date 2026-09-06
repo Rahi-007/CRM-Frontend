@@ -1,17 +1,20 @@
 "use client";
 
-import PrintLayout from "@/components/layouts/PrintLayout";
+import { formatDate } from "@/lib/modifier";
 import { ITeamReport } from "@/interface/report.interface";
 import { ProjectStatus, SubType, WorkType } from "@/config/enum";
 import { ColDef, ICellRendererParams } from "ag-grid-community";
+import PrintLayout from "@/components/layouts/PrintLayout";
 import ReportGrid from "@/components/layouts/DataGrid";
 import Link from "next/link";
 
 interface IProps {
   rowData: ITeamReport[];
+  name: string;
+  dateRange: string;
 }
 
-const TeamReportDataTable = ({ rowData }: IProps) => {
+const TeamReportDataTable = ({ rowData, name, dateRange }: IProps) => {
   const columnDefs: ColDef<ITeamReport>[] = [
     {
       headerName: "Project Name",
@@ -77,7 +80,7 @@ const TeamReportDataTable = ({ rowData }: IProps) => {
       headerName: "Sub Type",
       field: "subType",
       sortable: true,
-      filter: true,
+      filter: false,
       width: 100,
       cellRenderer: (params: { value: number }) => <span>{SubType[params.value] ?? "-"}</span>,
     },
@@ -85,8 +88,11 @@ const TeamReportDataTable = ({ rowData }: IProps) => {
       headerName: "Qty",
       field: "quantity",
       sortable: true,
-      filter: "agNumberColumnFilter",
+      filter: false,
       width: 60,
+      cellRenderer: (params: { value: number }) => {
+        return <div className="text-center">{params.value}</div>;
+      },
     },
     {
       headerName: "Submit Date",
@@ -97,18 +103,14 @@ const TeamReportDataTable = ({ rowData }: IProps) => {
       valueFormatter: params => {
         if (!params.value) return "-";
 
-        return new Date(params.value).toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        });
+        return formatDate(params.value);
       },
     },
     {
       headerName: "Submit Code",
       field: "submitCode",
       sortable: true,
-      filter: true,
+      filter: false,
       width: 140,
     },
     {
@@ -175,7 +177,7 @@ const TeamReportDataTable = ({ rowData }: IProps) => {
   ];
 
   return (
-    <PrintLayout title="Client Wise Report">
+    <PrintLayout title="Team Wise Report" subTitle={name} dateRange={dateRange}>
       <ReportGrid rowData={rowData} columnDefs={columnDefs} />
     </PrintLayout>
   );

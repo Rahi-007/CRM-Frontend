@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { formatDate } from "@/lib/modifier";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLazyGetDesignerWiseReportQuery } from "@/service/report.service";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -11,6 +12,8 @@ import User from "@/components/futures/User";
 import toast from "react-hot-toast";
 
 interface IProps {
+  setDateRange: React.Dispatch<React.SetStateAction<string>>;
+  setDesignerName: React.Dispatch<React.SetStateAction<string>>;
   getReport: ReturnType<typeof useLazyGetDesignerWiseReportQuery>[0];
   resetReport: ReturnType<typeof useLazyGetDesignerWiseReportQuery>[1]["reset"];
 }
@@ -28,13 +31,15 @@ const DesignerReportSchema = z
 
 type DesignerReportFilterValues = z.infer<typeof DesignerReportSchema>;
 
-const DesignerReportFilter = ({ getReport, resetReport }: IProps) => {
+const DesignerReportFilter = ({ getReport, setDesignerName, setDateRange, resetReport }: IProps) => {
   const form = useForm<DesignerReportFilterValues>({
     resolver: zodResolver(DesignerReportSchema),
   });
 
   const onSubmit = async (values: DesignerReportFilterValues) => {
     try {
+      const { formDate, toDate } = values;
+      setDateRange(`${formatDate(formDate)} to ${formatDate(toDate)}`);
       await getReport(values).unwrap();
       toast.success("Report generated successfully");
     } catch (err) {
@@ -47,7 +52,7 @@ const DesignerReportFilter = ({ getReport, resetReport }: IProps) => {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid gap-y-1 gap-x-4 px-3 sm:px-8 md:grid-cols-2 xl:grid-cols-3">
-        <User.Form control={form.control} name="designerId" label="Designer Name" required />
+        <User.Form control={form.control} name="designerId" label="Designer Name" setSelectedUserName={setDesignerName} required />
         <GDatePicker.Form name="formDate" label="Form Date" control={form.control} placeholder="Form Date" required />
         <GDatePicker.Form name="toDate" label="To Date" control={form.control} placeholder="To Date" required />
       </div>

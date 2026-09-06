@@ -9,9 +9,11 @@ import Link from "next/link";
 
 interface IProps {
   rowData: IClientReport[];
+  name: string;
+  dateRange: string;
 }
 
-const ClientReportDataTable = ({ rowData }: IProps) => {
+const ClientReportDataTable = ({ rowData, name, dateRange }: IProps) => {
   const columnDefs: ColDef<IClientReport>[] = [
     {
       headerName: "Project Name",
@@ -60,7 +62,7 @@ const ClientReportDataTable = ({ rowData }: IProps) => {
       headerName: "Sub Type",
       field: "subType",
       sortable: true,
-      filter: true,
+      filter: false,
       width: 100,
       cellRenderer: (params: { value: number }) => <span>{SubType[params.value] ?? "-"}</span>,
     },
@@ -68,7 +70,10 @@ const ClientReportDataTable = ({ rowData }: IProps) => {
       headerName: "Qty",
       field: "quantity",
       sortable: true,
-      filter: "agNumberColumnFilter",
+      filter: false,
+      cellRenderer: (params: { value: number }) => {
+        return <div className="text-center">{params.value}</div>;
+      },
       width: 60,
     },
     {
@@ -91,7 +96,7 @@ const ClientReportDataTable = ({ rowData }: IProps) => {
       headerName: "Submit Code",
       field: "submitCode",
       sortable: true,
-      filter: true,
+      filter: false,
       width: 140,
     },
     {
@@ -158,7 +163,7 @@ const ClientReportDataTable = ({ rowData }: IProps) => {
   ];
 
   return (
-    <PrintLayout title="Client Wise Report">
+    <PrintLayout title="Client Wise Report" subTitle={name} dateRange={dateRange}>
       <ReportGrid rowData={rowData} columnDefs={columnDefs} />
     </PrintLayout>
   );

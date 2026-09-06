@@ -1,6 +1,7 @@
 "use client";
 
-import { Control, FieldValues, Path } from "react-hook-form";
+import { useEffect } from "react";
+import { Control, FieldValues, Path, useWatch } from "react-hook-form";
 import { useSelectUsersQuery } from "@/service/user.service";
 import GSelect from "../generic/GSelect";
 
@@ -11,6 +12,7 @@ type UserFormProps<T extends FieldValues> = {
     placeholder?: string;
     disabled?: boolean;
     required?: boolean;
+    setSelectedUserName?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function UserSelect<T extends FieldValues>({
@@ -20,6 +22,7 @@ function UserSelect<T extends FieldValues>({
     placeholder = "Select User",
     disabled,
     required,
+    setSelectedUserName
 }: UserFormProps<T>) {
     const { data: users = [], isFetching } = useSelectUsersQuery();
 
@@ -27,6 +30,19 @@ function UserSelect<T extends FieldValues>({
         label: `${user.name} ~ ${user.phone}`,
         value: user.id,
     }));
+
+    const selectedUserId = useWatch({
+        control,
+        name,
+    });
+
+    useEffect(() => {
+        const selectedUser = users.find(
+            (user) => user.id === selectedUserId
+        );
+
+        setSelectedUserName?.(selectedUser?.name ?? "");
+    }, [selectedUserId, users, setSelectedUserName]);
 
     return (
         <GSelect.Form
