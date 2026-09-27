@@ -197,7 +197,7 @@ const SideBar = ({ className, setSidebarOpen }: IProps) => {
             <div className="border-t dark:border-gray-300 text-right absolute bottom-0 left-0 w-full h-[3.2vh]">
                 <small className="pl-1 font-light font-mono text-xs">
                     Author:
-                    <Link href="https://github.com/Rahi-007" target="_blank" className="hover:underline italic pr-2">
+                    <Link href="https://purelane.net/dev" target="_blank" className="hover:underline italic pr-2">
                         Bisakto Rahi
                     </Link>
                 </small>

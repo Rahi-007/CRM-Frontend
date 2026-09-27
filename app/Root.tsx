@@ -60,17 +60,8 @@ export default function Root({ children }: { children: React.ReactNode }) {
     };
   }, [sidebarOpen]);
 
-  if (checking) {
-    return <Loading />;
-  }
-
-  if (!accessToken) {
-    return (
-      <div className="flex w-full items-center justify-center h-screen bg-white">
-        <Login />
-      </div>
-    );
-  }
+  if (checking) return <Loading />;
+  if (!accessToken) return <Login />;
 
   return (
     <>
