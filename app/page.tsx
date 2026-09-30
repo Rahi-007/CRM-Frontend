@@ -2,7 +2,6 @@
 
 import MiniCard from "@/components/layouts/MiniCard";
 import Container from "@/components/layouts/Container";
-import ComingSoonCard from "@/components/layouts/ComingSoon";
 import { CircleCheck, FolderKanban, Users, UsersRound } from "lucide-react";
 import { useGetDashboardReportQuery } from "@/service/dashboard.service";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,7 +19,7 @@ export default function Home() {
             {Array.from({ length: 4 }).map((_, index) => (
               <div
                 key={index}
-                className="rounded-xl border bg-card p-5"
+                className="rounded-xl border border-[#449690]/30 bg-card p-5"
               >
                 <div className="flex items-center justify-between">
                   <div className="space-y-2">
@@ -67,8 +66,22 @@ export default function Home() {
           </div>
         )}
 
-        <div className="py-6">
-          <ComingSoonCard />
+        <div className="pt-4 grid grid-cols-1 sm:grid-cols-4 gap-4"> 
+          <div className="p-5 rounded-xl border border-[#449690]/30 h-38 shadow-sm sm:col-span-2">Project Overview Chart</div>
+          <div className="p-5 rounded-xl border border-[#449690]/30 h-38 shadow-sm sm:col-span-2">user online</div>
+          <div className="p-5 rounded-xl border border-[#449690]/30 h-52 shadow-sm sm:col-span-3">recent projects</div>
+          <div className="h-52 grid gap-2">
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+          </div>
+          <div className="p-5 rounded-xl border border-[#449690]/30 h-39 shadow-sm sm:col-span-3">top performer</div>
+          <div className="h-39 grid gap-2">
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+          </div>
         </div>
       </div>
     </Container >
