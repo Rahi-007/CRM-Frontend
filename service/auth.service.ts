@@ -1,5 +1,6 @@
 import { ILoginPayload, ILoginRes } from "@/interface/auth.interface";
 import { RTKApi } from "@/context/rtk-query";
+import { stopPresence } from "@/lib/presence";
 
 
 export const authApi = RTKApi.injectEndpoints({
@@ -13,6 +14,9 @@ export const authApi = RTKApi.injectEndpoints({
     }),
   }),
 });
+
+// export async function logout() {
+//   await stopPresence();
 
 export function logout() {
   if (typeof window !== "undefined") {

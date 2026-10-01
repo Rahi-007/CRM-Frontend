@@ -9,7 +9,6 @@ import { PERMISSIONS } from "@/config/const";
 
 export default function Home() {
   const { data, isLoading } = useGetDashboardReportQuery();
-  console.log(data)
 
   return (
     <Container permission={PERMISSIONS.USERS_VIEW}>
@@ -66,21 +65,21 @@ export default function Home() {
           </div>
         )}
 
-        <div className="pt-4 grid grid-cols-1 sm:grid-cols-4 gap-4"> 
+        <div className="pt-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
           <div className="p-5 rounded-xl border border-[#449690]/30 h-38 shadow-sm sm:col-span-2">Project Overview Chart</div>
           <div className="p-5 rounded-xl border border-[#449690]/30 h-38 shadow-sm sm:col-span-2">user online</div>
           <div className="p-5 rounded-xl border border-[#449690]/30 h-52 shadow-sm sm:col-span-3">recent projects</div>
           <div className="h-52 grid gap-2">
-            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
-            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
-            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
-            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div>
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div>
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div>
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div>
           </div>
           <div className="p-5 rounded-xl border border-[#449690]/30 h-39 shadow-sm sm:col-span-3">top performer</div>
           <div className="h-39 grid gap-2">
-            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
-            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
-            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div> 
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div>
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div>
+            <div className="p-5 rounded-xl border border-[#449690]/30 h-11 shadow-sm"></div>
           </div>
         </div>
       </div>

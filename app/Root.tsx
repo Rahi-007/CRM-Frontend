@@ -4,6 +4,7 @@ import Loading from "./loading";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hook/reduxHooks";
+import { startPresence, stopPresence } from "../lib/presence";
 import { setAuth } from "@/context/slice/auth.slice";
 import { logout } from "@/service/auth.service";
 import Footer from "@/components/layouts/Footer";
@@ -45,6 +46,16 @@ export default function Root({ children }: { children: React.ReactNode }) {
       setChecking(false);
     }, 0);
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    startPresence(accessToken);
+
+    return () => {
+      stopPresence();
+    };
+  }, [accessToken]);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
