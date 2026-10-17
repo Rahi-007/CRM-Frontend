@@ -61,7 +61,7 @@ const LoginForm = () => {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-[#07484a]">
             Welcome to
             <span className="block text-[#449690]">
-              TeamSync
+              Seema&apos;s Cloud Talk
             </span>
           </h1>
 
@@ -137,7 +137,7 @@ const LoginForm = () => {
             </GButton>
 
             <p className="mt-6 text-center text-xs text-gray-400">
-              Secure access to your TeamSync workspace
+              Secure access to your Seema&apos;s Cloud Talk workspace
             </p>
           </form>
         </div>

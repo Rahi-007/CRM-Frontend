@@ -83,7 +83,7 @@ const menus = [
     ],
   },
   {
-    title: "Reports",
+    title: "AI Reports",
     href: "/reports",
     icon: BarChart3,
     permission: PERMISSIONS.USERS_VIEW,
@@ -109,7 +109,7 @@ const menus = [
         permission: PERMISSIONS.USERS_VIEW,
       },
       {
-        title: "Summary Report",
+        title: "AI Summary Report",
         href: "/reports/summary",
         permission: PERMISSIONS.USERS_VIEW,
       },
