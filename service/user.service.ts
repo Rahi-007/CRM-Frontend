@@ -1,4 +1,5 @@
 import { RTKApi } from "@/context/rtk-query";
+import { IOnlineUsers } from "@/interface/session.interface";
 import { IAddUser, ISelectUser, IUpdateUser, IUser } from "@/interface/user.interface";
 
 export const userApi = RTKApi.injectEndpoints({
@@ -43,6 +44,10 @@ export const userApi = RTKApi.injectEndpoints({
       query: () => "v1/user/select",
       providesTags: ["User"],
     }),
+
+    onlineUsers: build.query<IOnlineUsers[], void>({
+      query: () => "v1/user/online"
+    }),
   }),
 });
 
@@ -52,5 +57,6 @@ export const {
   useDeleteUserMutation,
   useGetUserByIdQuery,
   useGetAllUsersQuery,
-  useSelectUsersQuery
+  useSelectUsersQuery,
+  useOnlineUsersQuery
 } = userApi;

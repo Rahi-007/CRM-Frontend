@@ -42,10 +42,10 @@ const Header = ({ className, setSidebarOpen, sidebarOpen }: IProps) => {
                 className="px-4 text-xl font-semibold"
             >
                 <span className={`inline-block md:hidden transition-transform duration-500 ${sidebarOpen ? "italic -skew-x-6" : "not-italic skew-x-0"}`}>
-                    Viva Soft Limited
+                    Seema&apos;s Cloud Talk
                 </span>
                 <span className="hidden md:inline-block">
-                    Viva Software Limited
+                    Seema&apos;s Cloud Talk
                 </span>
             </button>
             <div ref={ref} className="relative">

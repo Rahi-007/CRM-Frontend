@@ -32,7 +32,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UnityOps Software",
+  title: "Seema's Cloud Talk",
   description: "Team management software distribute the task and Role based Access",
 };
 

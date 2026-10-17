@@ -1,5 +1,5 @@
 import { RTKApi } from "@/context/rtk-query";
-import { IDashboardRes } from "@/interface/dashboard";
+import { IDashboardRes } from "@/interface/dashboard.interface";
 
 export const dashboardApi = RTKApi.injectEndpoints({
     endpoints: build => ({
