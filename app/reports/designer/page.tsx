@@ -14,7 +14,7 @@ const Page = () => {
   const [getDesignerWiseReport, { isLoading, data, isSuccess, reset: resetReport }] = useLazyGetDesignerWiseReportQuery();
 
   return (
-    <Container permission={PERMISSIONS.USERS_VIEW}>
+    <Container permission={PERMISSIONS.REPORTS_VIEW}>
       <PageHeader
         title="Designer Wise Report"
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Reports", href: "/reports" }, { label: "Designer Wise Report" }]}

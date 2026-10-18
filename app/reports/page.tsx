@@ -14,7 +14,7 @@ const Page = () => {
   });
 
   return (
-    <Container permission={PERMISSIONS.USERS_VIEW}>
+    <Container permission={PERMISSIONS.REPORTS_VIEW}>
       <PageHeader
         title="AI Report Assistant"
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Reports", href: "/reports" }, { label: "AI Report Assistant" }]}

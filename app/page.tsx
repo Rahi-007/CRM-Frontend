@@ -375,9 +375,25 @@ export default function Home() {
                             const year = Number(month.slice(0, 4));
                             const monthIndex = Number(month.slice(4, 6)) - 1;
 
-                            return new Date(year, monthIndex, 1).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+                            return new Date(year, monthIndex, 1).toLocaleDateString("en-US", {
+                              month: "short",
+                              year: "numeric",
+                            });
                           }}
                           formatter={(value, name) => [value ?? 0, name]}
+                          contentStyle={{
+                            fontSize: "11px",
+                            padding: "4px 8px",
+                            lineHeight: "1.3",
+                          }}
+                          itemStyle={{
+                            fontSize: "11px",
+                            padding: "0",
+                          }}
+                          labelStyle={{
+                            fontSize: "11px",
+                            marginBottom: "2px",
+                          }}
                         />
 
                         {designers.map((designer, index) => (

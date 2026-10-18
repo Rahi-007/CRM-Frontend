@@ -27,5 +27,6 @@ export const PERMISSIONS = {
     ROLES_EDIT: "roles.edit",
     ROLES_DELETE: "roles.delete",
 
+    REPORTS_VIEW: "Reports.View",
     SYSTEM_SETTINGS: "system.settings",
 } as const;

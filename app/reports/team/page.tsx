@@ -14,7 +14,7 @@ const Page = () => {
   const [getTeamWiseReport, { isLoading, data, isSuccess, reset: resetReport }] = useLazyGetTeamWiseReportQuery();
 
   return (
-    <Container permission={PERMISSIONS.USERS_VIEW}>
+    <Container permission={PERMISSIONS.REPORTS_VIEW}>
       <PageHeader
         title="Team Wise Report"
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Reports", href: "/reports" }, { label: "Team Wise Report" }]}

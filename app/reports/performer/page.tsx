@@ -15,7 +15,7 @@ const Page = () => {
   const [getPerformerReport, { isLoading, data, isSuccess, reset: resetReport }] = useLazyGetPerformerReportQuery();
 
   return (
-    <Container permission={PERMISSIONS.USERS_VIEW}>
+    <Container permission={PERMISSIONS.REPORTS_VIEW}>
       <PageHeader
         title="Top Performer Report"
         breadcrumbs={[{ label: "Dashboard", href: "/" }, { label: "Reports", href: "/reports" }, { label: "Top Performer Report" }]}

@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import GButton from "@/components/generic/GButton";
 import { IAiChatMessage } from "@/interface/ai_report.interface";
 import { useAskAiReportMutation } from "@/service/ai_report.service";
+import GButton from "@/components/generic/GButton";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import toast from "react-hot-toast";
 
 interface IProps {
@@ -59,7 +61,7 @@ const Chat = ({ dateRange }: IProps) => {
         )}
       </div>
 
-      <div className="max-h-[420px] space-y-3 overflow-y-auto">
+      <div className="max-h-105 space-y-3 overflow-y-auto">
         {messages.length === 0 && !isLoading && (
           <div className="rounded-lg border border-dashed p-5 text-center">
             <p className="text-sm text-muted-foreground">Start a conversation about your Seema&apos;s Cloud Talk reports.</p>
@@ -82,16 +84,45 @@ const Chat = ({ dateRange }: IProps) => {
         {messages.map((message, index) => (
           <div
             key={`${index}-${message.role}`}
-            className={`rounded-lg p-3 text-sm leading-6 ${message.role === "user" ? "ml-4 bg-[#449690]/10 sm:ml-8" : "mr-4 bg-muted/50 sm:mr-8"}`}
+            className={`rounded-lg p-3 text-sm leading-7 ${
+              message.role === "user" ? "ml-4 bg-[#449690]/10 sm:ml-8" : "mr-4 border border-border/50 bg-muted/50 sm:mr-8"
+            }`}
           >
-            <p className="mb-1 font-medium">{message.role === "user" ? "You" : "Seema's Cloud Talk AI"}</p>
-            <p className="whitespace-pre-wrap">{message.content}</p>
+            <p className="mb-2 text-xs font-semibold text-muted-foreground">{message.role === "user" ? "You" : "Seema's Cloud Talk AI"}</p>
+
+            <div
+              className="
+              break-words
+              [&_h1]:mb-3 [&_h1]:mt-5 [&_h1]:text-lg [&_h1]:font-bold
+              [&_h2]:mb-2 [&_h2]:mt-5 [&_h2]:text-base [&_h2]:font-semibold
+              [&_h3]:mb-2 [&_h3]:mt-4 [&_h3]:text-sm [&_h3]:font-semibold
+              [&_p]:my-2
+              [&_ul]:my-2 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5
+              [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5
+              [&_li]:pl-1
+              [&_strong]:font-semibold
+              [&_blockquote]:my-3 [&_blockquote]:border-l-2
+              [&_blockquote]:border-[#449690] [&_blockquote]:pl-3
+              [&_hr]:my-4 [&_hr]:border-border
+              [&_a]:text-[#449690] [&_a]:underline
+              [&_pre]:my-3 [&_pre]:overflow-x-auto
+              [&_pre]:rounded-md [&_pre]:bg-background [&_pre]:p-3
+              [&_code]:rounded [&_code]:bg-background
+              [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-xs
+              [&_pre_code]:bg-transparent [&_pre_code]:p-0
+              [&_table]:w-full [&_table]:my-3 [&_table]:text-xs
+              [&_th]:border [&_th]:p-2 [&_th]:text-left
+              [&_td]:border [&_td]:p-2
+            "
+            >
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
+            </div>
           </div>
         ))}
 
         {isLoading && (
-          <div className="mr-4 rounded-lg bg-muted/50 p-3 sm:mr-8">
-            <p className="mb-1 text-sm font-medium">Seema&apos;s Cloud Talk AI</p>
+          <div className="mr-4 rounded-lg border border-border/50 bg-muted/50 p-3 sm:mr-8">
+            <p className="mb-2 text-xs font-semibold text-muted-foreground">Seema&apos;s Cloud Talk AI</p>
             <p className="animate-pulse text-sm text-muted-foreground">Analyzing your report...</p>
           </div>
         )}
